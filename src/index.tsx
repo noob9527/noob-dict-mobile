@@ -1,4 +1,6 @@
+import 'reflect-metadata';
 import 'react-native-gesture-handler';
+import './services/impl/index';
 
 import { Provider } from 'react-redux';
 import { configureStore } from './redux/configure-store';

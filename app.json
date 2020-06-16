@@ -1,6 +1,16 @@
 {
   "expo": {
     "name": "Noob Dictionary",
-    "slug": "noob-dict-mobile"
+    "slug": "noob-dict-mobile",
+    "icon": "./src/assets/icon/icon@2x.png",
+    "version": "0.0.1",
+    "ios": {
+      "bundleIdentifier": "cn.staynoob.dict",
+      "buildNumber": "0.0.1"
+    },
+    "android": {
+      "package": "cn.staynoob.dict",
+      "versionCode": 1
+    }
   }
 }
