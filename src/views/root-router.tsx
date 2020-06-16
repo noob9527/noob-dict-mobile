@@ -1,23 +1,25 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, View } from 'react-native';
 import { AppView } from './app/app-view';
+import { SettingView } from './setting/setting-view';
+import { SearchView } from './search/search-view';
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator()
 
 export function RootRouter() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
+      <Tab.Navigator>
+        <Tab.Screen name="Search" component={SearchView}/>
+        <Tab.Screen
           name="App"
           component={AppView}
-          options={{ title: 'Welcome' }}
+          // options={{ title: 'Welcome' }}
         />
-        <Stack.Screen name="Home" component={Home}/>
-        <Stack.Screen name="Profile" component={Profile}/>
-      </Stack.Navigator>
+        <Tab.Screen name="Setting" component={SettingView}/>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
@@ -25,13 +27,6 @@ export function RootRouter() {
 const Home = () => {
   return (
     <View><Text>Home</Text></View>
-  );
-};
-
-
-const Profile = () => {
-  return (
-    <View><Text>Profile</Text></View>
   );
 };
 
