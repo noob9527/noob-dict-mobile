@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import { SearchService, SearchServiceToken } from '../../services/search-service';
 import { CorsSearchService } from '../../services/impl/search-service-impl';
 import { useState } from 'react';
-import { timer } from '../../noob-dict-core/utils/promise-extension';
+import database from '../../services/impl/db/database';
 
 const Container = styled.View`
   display: flex;
@@ -46,7 +46,24 @@ export const SearchView = () => {
             });
         }}
       />
-      <Text>{text}</Text>
-    </Container>
-  );
-};
+      <Button
+        title="sqlite"
+        onPress={() => {
+          database.transaction(tx => {
+            return tx.executeSql('select * from notes', [], (tx, res) => {
+              console.log(res.rows.length);
+              const items = Array.from({ length: res.rows.length }).map((e, i) => {
+                return res.rows.item(i)
+              });
+              console.log(items);
+            });
+          }, error => {
+            console.log(error);
+          }, () => {
+          });
+        }}
+          />
+          <Text>{text}</Text>
+          </Container>
+          );
+          };
