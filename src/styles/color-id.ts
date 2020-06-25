@@ -4,6 +4,7 @@ enum ColorId {
 
   background = 'background',
   foreground = 'foreground',
+  foreground_secondary = 'foreground_secondary',
 
   // word
   word_link = 'word_link',

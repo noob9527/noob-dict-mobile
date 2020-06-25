@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react';
+import { View, Text } from 'react-native';
 import useEventListener from '../../../../hooks/use-event-listener';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import speaker from './speaker.svg';
 
-const AudioButton = styled.button`
+const AudioButton = styled.Button`
   //display: inline-block;
   width: 1.2em;
   height: 1.2em;

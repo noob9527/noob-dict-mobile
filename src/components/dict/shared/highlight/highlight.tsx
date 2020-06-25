@@ -1,15 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
-import ColorId from '../../../../styles/ColorId';
+import { View, Text } from 'react-native';
+import styled from 'styled-components/native';
+import ColorId from '../../../../styles/color-id';
 
-const Sentence = styled.span`
+const Sentence = styled.View`
 `;
 
-const NormalSpan = styled.span`
+const NormalView = styled.View`
 
 `;
 
-const HighlightSpan = styled.span`
+const HighlightView = styled.View`
   color: ${props => props.theme[ColorId.word_highlight]};
 `;
 
@@ -41,8 +42,8 @@ const WordHighlight: React.FC<WordHighlightProp> = (props) => {
   // return <Sentence>{sentence}</Sentence>;
   return <Sentence>{words.map((e, i) =>
     (highlightWords.has(e)
-        ? <HighlightSpan key={i}>{e} </HighlightSpan>
-        : <NormalSpan key={i}>{e} </NormalSpan>
+        ? <HighlightView key={i}>{e} </HighlightView>
+        : <NormalView key={i}>{e} </NormalView>
     ))
   }
   </Sentence>;

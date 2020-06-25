@@ -1,12 +1,14 @@
 import React from 'react';
+import { View, Text, Animated } from 'react-native';
 import { Meaning } from '@noob9527/noob-dict-core';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
+import FlatList = Animated.FlatList;
 
-const ItemContainer = styled.li`
+const ItemContainer = styled.View`
 
 `;
 
-const ListContainer = styled.ul`
+const ListContainer = styled(FlatList)`
 
 `;
 
@@ -22,8 +24,8 @@ const MeaningItem: React.FC<MeaningItemProp> = (props: MeaningItemProp) => {
   const { meaning } = props;
   return (
     <ItemContainer>
-      <div>{meaning.EN}</div>
-      <div>{meaning.ZH}</div>
+      <View>{meaning.EN}</View>
+      <View>{meaning.ZH}</View>
     </ItemContainer>
   );
 };
@@ -32,7 +34,7 @@ const MeaningList: React.FC<MeaningListProp> = (props: MeaningListProp) => {
   const { meanings } = props;
   return (
     <>
-      <h4>Meanings:</h4>
+      <Text>Meanings:</Text>
       <ListContainer>
         {meanings.map((def, i) => (<MeaningItem meaning={def} key={i}/>))}
       </ListContainer>

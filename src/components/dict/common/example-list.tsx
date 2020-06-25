@@ -1,13 +1,15 @@
 import React from 'react';
+import { AntDesign } from '@expo/vector-icons'
+import { View, Text, Animated, FlatList } from 'react-native';
+import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import { Example, Language } from '@noob9527/noob-dict-core';
-import styled from 'styled-components';
-import { Button, Icon } from 'antd';
-import { ThemedTooltip } from '../../themed-ui/tooltip/tooltip';
+import styled from 'styled-components/native';
 import { useDispatch } from 'react-redux';
-import ColorId from '../../../styles/ColorId';
 import Highlight from '../shared/highlight/highlight';
+import ColorId from '../../../styles/color-id';
+import { ThemedTooltip } from '../../themed-ui/tooltip/tooltip';
 
-const ItemContainer = styled.li`
+const ItemContainer = styled.View`
   //margin-bottom: 8px;
   .ant-button {
     height: unset;
@@ -17,7 +19,7 @@ const ItemContainer = styled.li`
   }
 `;
 
-const ListContainer = styled.ul`
+const ListContainer = styled(FlatList)`
 
 `;
 
@@ -35,8 +37,8 @@ const ExampleItem: React.FC<ExampleItemProp> = (props: ExampleItemProp) => {
 
   return (
     <ItemContainer>
-      <div>
-        {/*<span>{en}</span>*/}
+      <View>
+        {/*<View>{en}</View>*/}
         <Highlight sentence={en} highlightWords={highlightWordSet}/>
         <ThemedTooltip title={'save as context'}>
           <Button type="link" shape="circle" ghost onClick={() => {
@@ -47,11 +49,11 @@ const ExampleItem: React.FC<ExampleItemProp> = (props: ExampleItemProp) => {
               },
             });
           }}>
-            <Icon type="file-add"/>
+            <AntDesign name="file-add"/>
           </Button>
         </ThemedTooltip>
-      </div>
-      <div>{zh}</div>
+      </View>
+      <View>{zh}</View>
     </ItemContainer>
   );
 };
@@ -65,7 +67,7 @@ const ExampleList: React.FC<ExampleListProp> = (props: ExampleListProp) => {
   const { examples, highlightWordSet } = props;
   return (
     <>
-      <h4>Examples:</h4>
+      <Text>Examples:</Text>
       <ListContainer>
         {examples.map((def, i) =>
           (<ExampleItem example={def} highlightWordSet={highlightWordSet} key={i}/>))

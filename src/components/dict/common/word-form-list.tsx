@@ -1,12 +1,13 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { WordForm, WordFormToken } from '@noob9527/noob-dict-core';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
-const ItemContainer = styled.span`
+const ItemContainer = styled.View`
 
 `;
-const ListContainer = styled.div`
-  > span + span::before {
+const ListContainer = styled.View`
+  > View + View::before {
     content: ' | ';
   }
 `;
@@ -23,8 +24,8 @@ const WordFormItem: React.FC<WordFormItemProp> = (props: WordFormItemProp) => {
   const { wordForm } = props;
   return (
     <ItemContainer>
-      <span>{WordFormToken.getLabel(wordForm[0])}: </span>
-      <span>{wordForm[1]}</span>
+      <View>{WordFormToken.getLabel(wordForm[0])}: </View>
+      <View>{wordForm[1]}</View>
     </ItemContainer>
   );
 };

@@ -1,16 +1,17 @@
 import React from 'react';
+import { View, Text, Animated, FlatList } from 'react-native';
 import { Definition } from '@noob9527/noob-dict-core';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import PronunciationList from './pronunciation-list';
 import WordFormList from './word-form-list';
 import MeaningList from './meaning-list';
 import ExampleList from './example-list';
 
-const ListContainer = styled.div`
+const ListContainer = styled(FlatList)`
 
 `;
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.View`
 
 `;
 
@@ -31,7 +32,7 @@ const DefinitionItem: React.FC<DefinitionItemProp> = (props: DefinitionItemProp)
   ]);
   return (
     <ItemContainer>
-      <span>{definition.partOfSpeech}</span>
+      <Text>{definition.partOfSpeech}</Text>
       <PronunciationList pronunciations={definition.pronunciations}/>
       <WordFormList wordForms={definition.wordForms}/>
       <MeaningList meanings={definition.meanings}/>
@@ -46,10 +47,10 @@ const DefinitionList: React.FC<DefinitionListProp> = (props: DefinitionListProp)
     <ListContainer>
       {definitions.map((def, i) =>
         (
-          <div key={i}>
+          <View key={i}>
             <DefinitionItem definition={def} key={i}/>
             {i < definitions.length - 1 ? <hr/> : null}
-          </div>
+          </View>
         ),
       )}
     </ListContainer>

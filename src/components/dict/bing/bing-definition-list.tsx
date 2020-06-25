@@ -1,14 +1,15 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { Definition } from '@noob9527/noob-dict-core';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import BingMeaningList from './bing-meaning-list';
 
-const ListContainer = styled.div`
+const ListContainer = styled.View`
 
 `;
 
-const ItemContainer = styled.div`
-  > span + span {
+const ItemContainer = styled.View`
+  > View + View {
     margin-left: 5px;
   }
 `;
@@ -26,7 +27,7 @@ const BingDefinitionItem: React.FC<BingDefinitionItemProp> = (props: BingDefinit
   const { definition } = props;
   return (
     <ItemContainer>
-      <span>{definition.partOfSpeech}</span>
+      <Text>{definition.partOfSpeech}</Text>
       <BingMeaningList meanings={definition.meanings}/>
     </ItemContainer>
   );

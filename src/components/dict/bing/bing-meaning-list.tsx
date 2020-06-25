@@ -1,12 +1,13 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { Meaning } from '@noob9527/noob-dict-core';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
-const ItemContainer = styled.span`
+const ItemContainer = styled.View`
 
 `;
 
-const ListContainer = styled.span`
+const ListContainer = styled.View`
 
 `;
 
@@ -22,8 +23,8 @@ const BingMeaningItem: React.FC<BingMeaningItemProp> = (props: BingMeaningItemPr
   const { meaning } = props;
   return (
     <ItemContainer>
-      <span>{meaning.EN}</span>
-      <span>{meaning.ZH}</span>
+      <Text>{meaning.EN}</Text>
+      <Text>{meaning.ZH}</Text>
     </ItemContainer>
   );
 };

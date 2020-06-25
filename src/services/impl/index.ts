@@ -1,4 +1,4 @@
-import { CorsSearchService } from './search-service-impl';
+import { CorsSearchService, MockSearchService } from './search-service-impl';
 import { LocalStorageServiceImpl } from './local-storage-service-impl';
 import { rendererContainer } from './renderer-container';
 import { SearchService, SearchServiceToken } from '../search-service';
@@ -11,7 +11,8 @@ import { NoteService, NoteServiceToken } from '../db/note-service';
 import { NoteServiceImpl } from './db/note-service-impl';
 
 function registerAllService() {
-  rendererContainer.bind<SearchService>(SearchServiceToken).to(CorsSearchService);
+  // rendererContainer.bind<SearchService>(SearchServiceToken).to(CorsSearchService);
+  rendererContainer.bind<SearchService>(SearchServiceToken).to(MockSearchService);
   rendererContainer.bind<UserService>(UserServiceToken).to(CorsUserService);
   rendererContainer.bind<LocalStorageService>(LocalStorageServiceToken).to(LocalStorageServiceImpl);
 

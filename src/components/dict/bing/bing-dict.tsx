@@ -1,6 +1,7 @@
 import React from 'react';
 import { SearchResult, SearchResults } from '@noob9527/noob-dict-core';
-import styled from 'styled-components';
+import { View, Text } from 'react-native';
+import styled from 'styled-components/native';
 import Title from '../common/title';
 import ExampleList from '../common/example-list';
 import PronunciationList from '../common/pronunciation-list';
@@ -9,7 +10,7 @@ import BingDefinitionList from './bing-definition-list';
 import { ThemedEmpty } from '../../themed-ui/empty/empty';
 import DoYouMeanGroup from '../common/do-you-mean-group';
 
-const Container = styled.div`
+const Container = styled.View`
 `;
 
 interface CommonEngineViewProps {
@@ -31,7 +32,7 @@ const BingDict: React.FC<CommonEngineViewProps> = (props: CommonEngineViewProps)
         <PronunciationList pronunciations={result.pronunciations}/>
         <BingDefinitionList definitions={result.definitions}/>
         <WordFormList wordForms={result.wordForms}/>
-        <hr/>
+        {/*<hr/>*/}
         <ExampleList examples={result.examples} highlightWordSet={highlightWords}/>
       </Container>
     );

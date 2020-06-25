@@ -1,25 +1,26 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { DoYouMeanItem, DoYouMeanType } from '@noob9527/noob-dict-core';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import _ from 'lodash';
 import WordLink from '../shared/word-link/word-link';
 
-const GroupContainer = styled.div`
+const GroupContainer = styled.View`
 `;
-const ListContainer = styled.div`
+const ListContainer = styled.View`
 `;
-const ItemContainer = styled.div`
-  span:nth-child(1) {
+const ItemContainer = styled.View`
+  View:nth-child(1) {
     margin-right: 15px;  
   }
 `;
 
-const GroupTitle = styled.h1`
+const GroupTitle = styled.Text`
   margin-bottom: 0;
   font-weight: bold;
 `;
 
-const ListTitle = styled.h3`
+const ListTitle = styled.Text`
   font-size: 1.2em;
 `;
 
@@ -42,7 +43,7 @@ const DoYouMeanItemComponent: React.FC<DoYouMeanItemProp> = (props) => {
   return (
     <ItemContainer>
       <WordLink word={doYouMeanItem.suggest.entry}/>
-      <span>{doYouMeanItem.suggest.explain}</span>
+      <View>{doYouMeanItem.suggest.explain}</View>
     </ItemContainer>
   );
 };
@@ -82,10 +83,10 @@ const DoYouMeanGroup: React.FC<DoYouMeanGroupProp> = (props) => {
       <GroupTitle>No result for '{target}', do you mean:</GroupTitle>
       {
         Object.entries(doYouMeanItemMap).map(([key, value], i, arr) => (
-          <div key={key}>
+          <View key={key}>
             <DoYouMeanList doYouMeanType={key as DoYouMeanType} doYouMeanItems={value}/>
             {i < arr.length - 1 ? <hr/> : null}
-          </div>
+          </View>
         ))
       }
     </GroupContainer>

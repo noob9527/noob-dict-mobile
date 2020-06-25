@@ -1,13 +1,14 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { SearchResult, SearchResults } from '@noob9527/noob-dict-core';
 import DefinitionList from './definition-list';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import Title from './title';
 import { ThemedEmpty } from '../../themed-ui/empty/empty';
 import DoYouMeanGroup from './do-you-mean-group';
 
 
-const Container = styled.div`
+const Container = styled.View`
 `;
 
 interface CommonEngineListProps {

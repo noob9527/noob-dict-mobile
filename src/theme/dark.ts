@@ -5,6 +5,7 @@ export const dark = {};
 
 dark[ColorId.background] = Color('#1E1E1E');
 dark[ColorId.foreground] = Color('#D4D4D4');
+dark[ColorId.foreground_secondary] = dark[ColorId.foreground]?.darken(0.3);
 
 // word
 dark[ColorId.word_link] = Color('#f9690e');

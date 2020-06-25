@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
-import ColorId from '../../../../styles/ColorId';
+import { View, Text } from 'react-native';
+import styled from 'styled-components/native';
 import { useDispatch } from 'react-redux';
+import ColorId from '../../../../styles/color-id';
 
-const StyledWordLink = styled.span`
+const StyledWordLink = styled.View`
   color: ${props => props.theme[ColorId.word_link]};
   cursor: pointer;
 `;

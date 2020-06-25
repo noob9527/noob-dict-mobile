@@ -9,23 +9,19 @@ import database from '../../services/impl/db/database';
 import ColorId from '../../styles/color-id';
 import { SearchInput } from './input/search-input';
 import { SearchPanel } from './panel/search-panel';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Container = styled.View`
+const Container = styled(SafeAreaView)`
   display: flex;
   flex-direction: column;
+  /*
   overflow: hidden;
-  
-  > * + * {
-    flex: 1;
-    overflow: hidden;
-  }
+   */
 `;
 
 const Header = styled.View`
-  height: 100px;
   color: ${props => props.theme[ColorId.foreground]};
   background-color: ${props => props.theme[ColorId.background]};
-  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,14 +30,8 @@ const Header = styled.View`
 const Content = styled.View`
   display: flex;
   flex-direction: column;
-
-  > * + * {
-    display: flex;
-    flex-direction: column;
-    //overflow: auto;  // default scroll bar, we use react-scrollbar instead
-    overflow: hidden;
-    flex: 1;
-  }
+  height: 100%;
+  background-color: ${props => props.theme[ColorId.background]};
 `;
 
 

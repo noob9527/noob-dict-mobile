@@ -14,7 +14,7 @@ const HeadPadding = styled.View`
 export const RootView: React.FC = () => {
   return (
     <SafeAreaProvider>
-      <HeadPadding/>
+      {/*<HeadPadding/>*/}
       <ThemeProvider theme={dark}>
         <RootRouter/>
       </ThemeProvider>

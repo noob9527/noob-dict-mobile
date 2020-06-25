@@ -29,6 +29,7 @@ const effects = {
     yield put({
       type: 'searchInput/mergeState',
       payload: {
+        text: action?.text,
         loadingSuggests: true,
       },
     });

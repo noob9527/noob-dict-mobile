@@ -6,10 +6,14 @@ import { Text, View } from 'react-native';
 import { AppView } from './app/app-view';
 import { SettingView } from './setting/setting-view';
 import { SearchPage } from './search/search-page';
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components/native';
+import ColorId from '../styles/color-id';
 
 const Tab = createBottomTabNavigator()
 
 export function RootRouter() {
+  const theme = useContext(ThemeContext);
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -34,8 +38,15 @@ export function RootRouter() {
           }
         }}
         tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
+          style:{
+            borderTopWidth: 0,
+          },
+          tabStyle:{
+          },
+          activeTintColor: theme[ColorId.tab_activeForeground],
+          inactiveTintColor: theme[ColorId.tab_inactiveForeground],
+          activeBackgroundColor: theme[ColorId.tab_activeBackground],
+          inactiveBackgroundColor: theme[ColorId.tab_inactiveBackground],
         }}
       >
         <Tab.Screen name="Search" component={SearchPage}/>
