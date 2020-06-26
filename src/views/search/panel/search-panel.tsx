@@ -11,21 +11,20 @@ const Container = styled.View`
 
 export const SearchPanel = () => {
   const {
-    text,
-    suggests,
-    loadingSuggests,
+    open,
   } = useSelector((state: { searchInput: SearchInputState }) => state.searchInput);
-  const state: SearchPanelState = useSelector((state: any) => state.searchPanel);
 
-  const showSuggests = !!suggests.length;
-  if (showSuggests) {
-
+  if (open) {
+    return (
+      <Container>
+        <SearchSuggests/>
+      </Container>
+    )
   }
 
   return (
     <Container>
-      <SearchSuggests></SearchSuggests>
-      {/*<EngineView></EngineView>*/}
+      <EngineView/>
 
       {/*<Switch>*/}
       {/*  /!*<Route path="/search/tab1" component={() => <div>tab1</div>}/>*!/*/}

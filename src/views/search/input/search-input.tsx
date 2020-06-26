@@ -68,6 +68,9 @@ export const SearchInput: React.FC = (props: any) => {
 
   // 用户输入搜索字符
   function handleInputSearchText(text: string) {
+    if (!open) {
+      setOpen(true);
+    }
     dispatch({
       type: 'searchInput/inputSearchText',
       text,

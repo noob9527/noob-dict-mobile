@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { WordForm, WordFormToken } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
+import { ThemedText } from '../../themed-ui/text/text';
 
 const ItemContainer = styled.View`
-
+  flex-direction: row;
+  margin-right: 5px;
 `;
 const ListContainer = styled.View`
-  > View + View::before {
-    content: ' | ';
-  }
+  margin-top: 8px;
 `;
 
 
@@ -24,8 +24,8 @@ const WordFormItem: React.FC<WordFormItemProp> = (props: WordFormItemProp) => {
   const { wordForm } = props;
   return (
     <ItemContainer>
-      <View>{WordFormToken.getLabel(wordForm[0])}: </View>
-      <View>{wordForm[1]}</View>
+      <ThemedText>{WordFormToken.getLabel(wordForm[0])}: </ThemedText>
+      <ThemedText>{wordForm[1]}</ThemedText>
     </ItemContainer>
   );
 };

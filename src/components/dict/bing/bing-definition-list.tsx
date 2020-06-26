@@ -3,17 +3,19 @@ import { View, Text } from 'react-native';
 import { Definition } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
 import BingMeaningList from './bing-meaning-list';
+import { ThemedText } from '../../themed-ui/text/text';
 
 const ListContainer = styled.View`
-
 `;
 
 const ItemContainer = styled.View`
-  > View + View {
-    margin-left: 5px;
-  }
+  margin-top: 3px;
+  flex-direction: row;
 `;
 
+const StyledText = styled(ThemedText)`
+  margin-right: 10px;
+`;
 
 interface BingDefinitionListProp {
   definitions: Definition[]
@@ -27,7 +29,7 @@ const BingDefinitionItem: React.FC<BingDefinitionItemProp> = (props: BingDefinit
   const { definition } = props;
   return (
     <ItemContainer>
-      <Text>{definition.partOfSpeech}</Text>
+      <StyledText>{definition.partOfSpeech}</StyledText>
       <BingMeaningList meanings={definition.meanings}/>
     </ItemContainer>
   );

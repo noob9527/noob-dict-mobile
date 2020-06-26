@@ -9,8 +9,21 @@ import WordFormList from '../common/word-form-list';
 import BingDefinitionList from './bing-definition-list';
 import { ThemedEmpty } from '../../themed-ui/empty/empty';
 import DoYouMeanGroup from '../common/do-you-mean-group';
+import { LineSeparator } from '../../themed-ui/line-separator';
 
-const Container = styled.View`
+const Container = styled.ScrollView`
+`;
+
+const ContentContainer = styled.View`
+  width: 90%;
+  margin: auto;
+  /*
+  padding-bottom: 200px;
+   */
+`;
+
+const StyledTitle = styled(Title)`
+  margin-bottom: 10px;
 `;
 
 interface CommonEngineViewProps {
@@ -28,12 +41,14 @@ const BingDict: React.FC<CommonEngineViewProps> = (props: CommonEngineViewProps)
     ]);
     return (
       <Container>
-        <Title>{result.title}</Title>
-        <PronunciationList pronunciations={result.pronunciations}/>
-        <BingDefinitionList definitions={result.definitions}/>
-        <WordFormList wordForms={result.wordForms}/>
-        {/*<hr/>*/}
-        <ExampleList examples={result.examples} highlightWordSet={highlightWords}/>
+        <ContentContainer>
+          <StyledTitle>{result.title}</StyledTitle>
+          <PronunciationList pronunciations={result.pronunciations}/>
+          <BingDefinitionList definitions={result.definitions}/>
+          <WordFormList wordForms={result.wordForms}/>
+          <LineSeparator/>
+          <ExampleList examples={result.examples} highlightWordSet={highlightWords}/>
+        </ContentContainer>
       </Container>
     );
   } else if (SearchResults.isDoYouMeanResult(result)) {

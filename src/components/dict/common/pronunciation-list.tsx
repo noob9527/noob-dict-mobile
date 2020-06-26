@@ -3,16 +3,19 @@ import { View, Text } from 'react-native';
 import { Pronunciation, LanguageTag } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
 import Speaker from '../shared/speaker/speaker';
+import { ThemedText } from '../../themed-ui/text/text';
 
 const ItemContainer = styled.View`
-  > View + View {
-    margin-left: 5px;
-  }
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
 `;
 const ListContainer = styled.View`
-  > View + View {
-    margin-left: 15px;
-  }
+  flex-direction: row;
+  align-items: center;
+`;
+const StyledText = styled(ThemedText)`
+  margin-right: 5px;
 `;
 
 interface PronunciationItemProps {
@@ -27,8 +30,8 @@ const PronunciationItem: React.FC<PronunciationItemProps> = (props: Pronunciatio
   const { pronunciation } = props;
   return (
     <ItemContainer>
-      <Text>{LanguageTag.getLabel(pronunciation.tag)}</Text>
-      <Text>{pronunciation.phoneticSymbol}</Text>
+      <StyledText>{LanguageTag.getLabel(pronunciation.tag)}</StyledText>
+      <StyledText>{pronunciation.phoneticSymbol}</StyledText>
       <Speaker src={pronunciation.audio ?? undefined}/>
     </ItemContainer>
   );

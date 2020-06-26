@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 import ColorId from '../../../../styles/color-id';
+import { ThemedText } from '../../../themed-ui/text/text';
 
-const Sentence = styled.View`
+const Sentence = styled(ThemedText)`
 `;
 
-const NormalView = styled.View`
+const NormalView = styled(ThemedText)`
 
 `;
 
-const HighlightView = styled.View`
+const HighlightView = styled(ThemedText)`
   color: ${props => props.theme[ColorId.word_highlight]};
 `;
 

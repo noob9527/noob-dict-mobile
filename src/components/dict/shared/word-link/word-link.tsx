@@ -3,10 +3,10 @@ import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { useDispatch } from 'react-redux';
 import ColorId from '../../../../styles/color-id';
+import { ThemedText } from '../../../themed-ui/text/text';
 
-const StyledWordLink = styled.View`
+const StyledWordLink = styled(ThemedText)`
   color: ${props => props.theme[ColorId.word_link]};
-  cursor: pointer;
 `;
 
 interface WordLinkProps {

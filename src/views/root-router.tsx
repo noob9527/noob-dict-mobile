@@ -16,48 +16,48 @@ export function RootRouter() {
   const theme = useContext(ThemeContext);
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => {
-          return {
-            tabBarIcon: ({ focused, size, color }) => {
-              let iconName;
-              switch (route.name) {
-                case 'Search':
-                  iconName = 'search1';
-                  break;
-                case 'App':
-                  iconName = 'book';
-                  break;
-                case 'Setting':
-                  iconName = 'user'
-                  break;
-              }
-              // You can return any component that you like here!
-              return <AntDesign name={iconName} size={size} color={color}/>;
-            }
-          }
-        }}
-        tabBarOptions={{
-          style:{
-            borderTopWidth: 0,
-          },
-          tabStyle:{
-          },
-          activeTintColor: theme[ColorId.tab_activeForeground],
-          inactiveTintColor: theme[ColorId.tab_inactiveForeground],
-          activeBackgroundColor: theme[ColorId.tab_activeBackground],
-          inactiveBackgroundColor: theme[ColorId.tab_inactiveBackground],
-        }}
-      >
-        <Tab.Screen name="Search" component={SearchPage}/>
-        <Tab.Screen
-          name="App"
-          component={AppView}
-          // options={{ title: 'Welcome' }}
-        />
-        <Tab.Screen name="Setting" component={SettingView}/>
-      </Tab.Navigator>
+      <SearchPage/>
     </NavigationContainer>
   );
 }
 
+// <Tab.Navigator
+//   screenOptions={({ route }) => {
+//     return {
+//       tabBarIcon: ({ focused, size, color }) => {
+//         let iconName;
+//         switch (route.name) {
+//           case 'Search':
+//             iconName = 'search1';
+//             break;
+//           case 'App':
+//             iconName = 'book';
+//             break;
+//           case 'Setting':
+//             iconName = 'user'
+//             break;
+//         }
+//         // You can return any component that you like here!
+//         return <AntDesign name={iconName} size={size} color={color}/>;
+//       }
+//     }
+//   }}
+//   tabBarOptions={{
+//     style:{
+//       borderTopWidth: 0,
+//     },
+//     tabStyle:{
+//     },
+//     activeTintColor: theme[ColorId.tab_activeForeground],
+//     inactiveTintColor: theme[ColorId.tab_inactiveForeground],
+//     activeBackgroundColor: theme[ColorId.tab_activeBackground],
+//     inactiveBackgroundColor: theme[ColorId.tab_inactiveBackground],
+//   }}
+// >
+//   <Tab.Screen name="Search" component={SearchPage}/>
+//   <Tab.Screen
+//     name="App"
+//     component={AppView}
+//   />
+//   <Tab.Screen name="Setting" component={SettingView}/>
+// </Tab.Navigator>

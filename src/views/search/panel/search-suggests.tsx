@@ -19,7 +19,6 @@ const ListContainer = styled(FlatList)`
 `;
 
 const ListItemContainer = styled.TouchableOpacity`
-  width: 90%;
   flex-direction: row;
 `;
 

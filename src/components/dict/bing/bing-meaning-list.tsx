@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Meaning } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
-
-const ItemContainer = styled.View`
-
-`;
+import { ThemedText } from '../../themed-ui/text/text';
 
 const ListContainer = styled.View`
 
+`;
+
+const ItemContainer = styled.View`
+  flex-direction: row;
 `;
 
 interface BingMeaningItemProp {
@@ -23,8 +24,8 @@ const BingMeaningItem: React.FC<BingMeaningItemProp> = (props: BingMeaningItemPr
   const { meaning } = props;
   return (
     <ItemContainer>
-      <Text>{meaning.EN}</Text>
-      <Text>{meaning.ZH}</Text>
+      <ThemedText>{meaning.EN}</ThemedText>
+      <ThemedText>{meaning.ZH}</ThemedText>
     </ItemContainer>
   );
 };

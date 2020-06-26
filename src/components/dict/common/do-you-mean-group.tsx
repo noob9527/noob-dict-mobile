@@ -4,6 +4,7 @@ import { DoYouMeanItem, DoYouMeanType } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
 import _ from 'lodash';
 import WordLink from '../shared/word-link/word-link';
+import { ThemedText } from '../../themed-ui/text/text';
 
 const GroupContainer = styled.View`
 `;
@@ -15,13 +16,16 @@ const ItemContainer = styled.View`
   }
 `;
 
-const GroupTitle = styled.Text`
+const LineSeparator = styled.View`
+
+`
+
+const GroupTitle = styled(ThemedText)`
   margin-bottom: 0;
   font-weight: bold;
 `;
 
-const ListTitle = styled.Text`
-  font-size: 1.2em;
+const ListTitle = styled(ThemedText)`
 `;
 
 interface DoYouMeanGroupProp {
@@ -43,7 +47,7 @@ const DoYouMeanItemComponent: React.FC<DoYouMeanItemProp> = (props) => {
   return (
     <ItemContainer>
       <WordLink word={doYouMeanItem.suggest.entry}/>
-      <View>{doYouMeanItem.suggest.explain}</View>
+      <Text>{doYouMeanItem.suggest.explain}</Text>
     </ItemContainer>
   );
 };
@@ -85,7 +89,7 @@ const DoYouMeanGroup: React.FC<DoYouMeanGroupProp> = (props) => {
         Object.entries(doYouMeanItemMap).map(([key, value], i, arr) => (
           <View key={key}>
             <DoYouMeanList doYouMeanType={key as DoYouMeanType} doYouMeanItems={value}/>
-            {i < arr.length - 1 ? <hr/> : null}
+            {i < arr.length - 1 ? <LineSeparator/> : null}
           </View>
         ))
       }
