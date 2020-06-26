@@ -27,25 +27,23 @@ export class CorsUserService implements UserService {
     // we remove last_sync_time here, otherwise won't able to fetch latest update item
     // this may take a long while to finish
     user.last_sync_time = (new Date(0)).toISOString()
-    this.localStorageService.putObject(USER_KEY, user);
+    await this.localStorageService.putObject(USER_KEY, user);
     return user;
   }
 
-  // note this doesn't work in main process
-  // https://stackoverflow.com/questions/50205905/is-it-possible-to-access-and-read-localstorage-for-an-electron-application
-  fetchCurrentUserFromStorage(): User | null | undefined {
+  async fetchCurrentUserFromStorage(): Promise<User | null | undefined> {
     return this.localStorageService.getObject(USER_KEY);
   }
 
-  patchCurrentUser(patch: Partial<User>): User {
-    const user = this.fetchCurrentUserFromStorage()!!;
+  async patchCurrentUser(patch: Partial<User>): Promise<User> {
+    const user = await this.fetchCurrentUserFromStorage()!!;
     Object.assign(user, patch);
-    this.localStorageService.putObject(USER_KEY, user);
+    await this.localStorageService.putObject(USER_KEY, user);
     return user;
   }
 
   logout() {
-    this.localStorageService.remove(USER_KEY)
+    return this.localStorageService.remove(USER_KEY)
   }
 
 }

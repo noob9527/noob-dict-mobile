@@ -6,9 +6,9 @@ export const UserServiceToken = Symbol.for('user-service');
 export interface UserService {
   login(code: string, option: LoginOption): Promise<User>
 
-  fetchCurrentUserFromStorage(): User | null | undefined
+  fetchCurrentUserFromStorage(): Promise<User | null | undefined>
 
-  patchCurrentUser(patch: Partial<User>): User
+  patchCurrentUser(patch: Partial<User>): Promise<User>
 
   logout()
 }

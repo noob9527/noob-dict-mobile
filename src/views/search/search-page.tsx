@@ -12,15 +12,14 @@ import { SearchPanel } from './panel/search-panel';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Container = styled(SafeAreaView)`
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  background-color: ${props => props.theme[ColorId.status_bar_background]};
   /*
   overflow: hidden;
    */
 `;
 
 const Header = styled.View`
-  color: ${props => props.theme[ColorId.foreground]};
   background-color: ${props => props.theme[ColorId.background]};
   display: flex;
   align-items: center;

@@ -6,6 +6,8 @@ enum ColorId {
   foreground = 'foreground',
   foreground_secondary = 'foreground_secondary',
 
+  status_bar_background = 'status_bar_background',
+
   // word
   word_link = 'word_link',
   word_highlight = 'word_highlight',

@@ -7,6 +7,10 @@ dark[ColorId.background] = Color('#1E1E1E');
 dark[ColorId.foreground] = Color('#D4D4D4');
 dark[ColorId.foreground_secondary] = dark[ColorId.foreground]?.darken(0.3);
 
+// dark[ColorId.status_bar_background] = Color('#D4D4D4');
+// dark[ColorId.status_bar_background] = Color('#3C3C3C');
+dark[ColorId.status_bar_background] = Color('#D4D4D4').darken(0.3);
+
 // word
 dark[ColorId.word_link] = Color('#f9690e');
 dark[ColorId.word_highlight] = Color('rebeccapurple').lighten(0.5);

@@ -3,6 +3,7 @@
     "name": "Noob Dictionary",
     "slug": "noob-dict-mobile",
     "icon": "./src/assets/icon/icon@2x.png",
+    "scheme": "cn.staynoob.dict",
     "version": "0.0.1",
     "ios": {
       "bundleIdentifier": "cn.staynoob.dict",
