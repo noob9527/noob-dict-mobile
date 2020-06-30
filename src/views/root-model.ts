@@ -1,15 +1,14 @@
 import { dark } from '../theme/dark';
-import { call, put, take } from '@redux-saga/core/effects';
+import { call, put } from '@redux-saga/core/effects';
 import { END, eventChannel } from 'redux-saga';
 import { setInterval } from 'timers';
-import { rendererContainer } from '../services/impl/renderer-container';
-import { UserService, UserServiceToken } from '../services/user-service';
 import { User } from '../model/user';
 import { Model } from '../redux/model-manager';
-import { Runtime } from '../utils/runtime';
+import { UserService, UserServiceToken } from '../services/user-service';
+import { rendererContainer } from '../services/impl/renderer-container';
 
 // const appService = rendererContainer.get<AppService>(AppServiceToken);
-// const userService = rendererContainer.get<UserService>(UserServiceToken);
+const userService = rendererContainer.get<UserService>(UserServiceToken);
 // const loginUiService = rendererContainer.get<LoginUiService>(LoginUiServiceToken);
 // const globalHistoryService = rendererContainer.get<GlobalHistoryService>(GlobalHistoryServiceToken);
 
@@ -18,7 +17,7 @@ export interface RootState {
   app: {
     // version: String
   }
-  // currentUser: User | null | undefined
+  currentUser: User | null | undefined
 }
 
 export interface RootModel extends Model {
@@ -26,44 +25,29 @@ export interface RootModel extends Model {
 }
 
 const effects = {
-  // * login() {
-  //   console.log('login');
-  //   yield call([loginUiService, loginUiService.open]);
-  // },
-  // * [LoginChannel.LOGIN_CODE_RECEIVED](action) {
-  //   const { payload } = action;
-  //   let user = null;
-  //   try {
-  //     user = yield call([userService, userService.login], payload.code, payload.loginOption);
-  //   } catch (e) {
-  //     logger.error('fail to fetch user info');
-  //   }
-  //   if (!user) return;
-  //   yield put({
-  //     type: 'root/loginSuccess',
-  //     payload: { user }
-  //   });
-  // },
-  // * logout() {
-  //   yield put({
-  //     type: 'root/mergeState',
-  //     payload: { currentUser: null }
-  //   });
-  //   yield call([userService, userService.logout]);
-  // },
+  * loadCurrentUser() {
+    const user = yield call([userService, userService.fetchCurrentUserFromStorage]);
+    console.log('loadCurrentUser');
+    put({
+      type: 'root/mergeState',
+      payload: {
+        currentUser: user,
+      },
+    });
+  },
 };
 
 const reducers = {
   loginSuccess(state, action: any) {
     return {
       ...state,
-      currentUser: action.payload.user
-    }
+      currentUser: action.payload.user,
+    };
   },
   mergeState(state, action: any) {
     return {
       ...state,
-      ...action.payload
+      ...action.payload,
     };
   },
 };
@@ -75,7 +59,7 @@ const rootModel: RootModel = {
     app: {
       // version: appService.getVersion()
     },
-    // currentUser: userService.fetchCurrentUserFromStorage(),
+    currentUser: null,
   },
   effects,
   reducers,
@@ -131,7 +115,7 @@ function interval(maxTime: number) {
       // The subscriber must return an unsubscribe function
       return () => {
         clearInterval(iv);
-      }
-    }
-  )
+      };
+    },
+  );
 }

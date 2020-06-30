@@ -5,6 +5,7 @@ import { UserService } from '../user-service';
 import { rendererContainer } from './renderer-container';
 import { LoginOption } from '../social-login';
 import { User } from '../../model/user';
+import logger from '../../utils/logger';
 
 const USER_KEY = 'currentUser';
 
@@ -15,7 +16,7 @@ export class CorsUserService implements UserService {
   private localStorageService: LocalStorageService;
 
   constructor() {
-    // this.localStorageService = rendererContainer.get<LocalStorageService>(LocalStorageServiceToken);
+    this.localStorageService = rendererContainer.get<LocalStorageService>(LocalStorageServiceToken);
   }
 
   async login(code: string, option: LoginOption): Promise<User> {
@@ -24,6 +25,11 @@ export class CorsUserService implements UserService {
       redirect_uri: option.params.redirect_uri
     });
     const user = res.data;
+    if (!user.id) {
+      logger.error('option:', option);
+      logger.error('res:', res);
+      throw Error('login failed');
+    }
     // we remove last_sync_time here, otherwise won't able to fetch latest update item
     // this may take a long while to finish
     user.last_sync_time = (new Date(0)).toISOString()

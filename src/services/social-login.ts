@@ -1,6 +1,8 @@
 /**
  * note that redirect_uri doesn't have any meaning here as we close the login window
  */
+import Constants from 'expo-constants';
+import { makeRedirectUri } from 'expo-auth-session';
 
 enum LoginType {
   GITHUB = 'GITHUB',
@@ -26,8 +28,14 @@ const githubOption: LoginOption = {
   tokenExchangeUrl: 'https://a3eks8ljq9.execute-api.ap-east-1.amazonaws.com/prod/auth/github',
   endpoint: 'https://github.com/login/oauth/authorize',
   params: {
-    client_id: 'd0812cce061bc8601159',
-    redirect_uri: 'http://localhost:3000/github/login_success',
+    // client_id: 'd0812cce061bc8601159',
+    // client_id: '28e5da20b548b1b8e115',
+    client_id: Constants.manifest.extra['REACT_NATIVE_APP_GITHUB_CLIENT_ID'],
+    redirect_uri: makeRedirectUri({
+      native: Constants.manifest.extra['REACT_NATIVE_APP_GITHUB_REDIRECT_URI'],
+      // native: 'https://auth.expo.io/@noob9527/noob-dict-mobile',
+      useProxy: false,
+    }),
     scope: 'user',
   },
   get url() {
@@ -39,7 +47,7 @@ const githubOption: LoginOption = {
   },
   windowSize: {
     height: 752,
-    width: Math.ceil(1.3 * 752)
+    width: Math.ceil(1.3 * 752),
   },
 };
 
@@ -47,8 +55,11 @@ const weiboOption: LoginOption = {
   tokenExchangeUrl: 'https://a3eks8ljq9.execute-api.ap-east-1.amazonaws.com/prod/auth/weibo',
   endpoint: 'https://api.weibo.com/oauth2/authorize',
   params: {
-    client_id: '1963552182',
-    redirect_uri: 'http://x.com/weibo/login_success',
+    client_id: Constants.manifest.extra['REACT_NATIVE_APP_WEIBO_CLIENT_ID'],
+    redirect_uri: makeRedirectUri({
+      native: Constants.manifest.extra['REACT_NATIVE_APP_WEIBO_REDIRECT_URI'],
+      useProxy: false,
+    }),
     response_type: 'code',
   },
   get url() {
@@ -64,7 +75,7 @@ const weiboOption: LoginOption = {
 function getLoginType(url: string): LoginType | null {
   if (url.includes('github')) return LoginType.GITHUB;
   if (url.includes('weibo')) return LoginType.WEIBO;
-  return null
+  return null;
 }
 
 function getLoginOption(loginType: LoginType) {
@@ -87,4 +98,4 @@ export {
   getLoginType,
   getLoginOption,
   extractCode,
-}
+};

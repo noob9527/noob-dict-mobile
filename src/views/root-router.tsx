@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, View } from 'react-native';
 import { AppView } from './app/app-view';
-import { ProfilePage } from './setting/profile-page';
+import { ProfilePage } from './profile/profile-page';
 import { SearchPage } from './search/search-page';
 import { useContext, useEffect } from 'react';
 import { ThemeContext } from 'styled-components/native';

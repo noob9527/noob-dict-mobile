@@ -2,6 +2,7 @@ import { ModelManager } from './model-manager';
 import * as models from '../views/models';
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { reduxPersistStoreEnhancer } from './persist/redux-persist-store-enhancer';
 
 
 export function configureStore() {
@@ -22,6 +23,7 @@ export function configureStore() {
       applyMiddleware(
         sagaMiddleware,
       ),
+      reduxPersistStoreEnhancer,
     ),
   );
 

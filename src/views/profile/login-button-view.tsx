@@ -16,11 +16,6 @@ const LoginTouchable = styled.TouchableOpacity`
   margin-top: 20px;
 `;
 
-const IconContainer = styled.Text`
-  color: ${props => props.theme[ColorId.foreground]};
-  margin-left: 20px;
-`;
-
 const LoginHint = styled.Text`
   color: ${props => props.theme[ColorId.foreground]};
   font-size: 25px;
@@ -30,19 +25,8 @@ const LoginHint = styled.Text`
 export const LoginButtonView: React.FC = () => {
   const theme = useContext(ThemeContext);
 
-  const config = {
-    // redirectUrl: '',
-    clientId: 'd0812cce061bc8601159',
-    scope: 'user',
-    serviceConfiguration: {
-      authorizationEndpoint: 'https://github.com/login/oauth/authorize',
-      tokenEndpoint: 'https://github.com/login/oauth/access_token',
-      revocationEndpoint: 'https://github.com/settings/connections/applications/d0812cce061bc8601159'
-    }
-  }
-
   async function onPress() {
-    console.log(config);
+    console.log(123);
   }
 
   return (
@@ -50,10 +34,6 @@ export const LoginButtonView: React.FC = () => {
       <LoginTouchable
         onPress={onPress}
       >
-        <IconContainer>
-          {/*<AntDesign name={'user'} size={24} color={theme[ColorId.foreground]}/>;*/}
-          <FontAwesome name="user-circle-o" size={60} color={theme[ColorId.foreground]} />
-        </IconContainer>
         <LoginHint>点击登录</LoginHint>
       </LoginTouchable>
     </Container>

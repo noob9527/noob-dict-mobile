@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { LocalStorageService } from '../LocalStorageService';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 // this implementation only works if you can circumvent the CORS problem
