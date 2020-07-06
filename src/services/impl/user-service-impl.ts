@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
 import axios from 'axios';
-import { LocalStorageService, LocalStorageServiceToken } from '../LocalStorageService';
+import { LocalStorageService, LocalStorageServiceToken } from '../local-storage-service';
 import { UserService } from '../user-service';
 import { rendererContainer } from './renderer-container';
-import { LoginOption } from '../social-login';
+import { LoginOption } from '../../config/social-login';
 import { User } from '../../model/user';
 import logger from '../../utils/logger';
 

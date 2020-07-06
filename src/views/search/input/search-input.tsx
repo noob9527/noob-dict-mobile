@@ -36,7 +36,7 @@ const SearchTextInputIcon = styled.Text`
   color: ${props => props.theme[ColorId.input_foreground]};
   background-color: ${props => props.theme[ColorId.input_background]};
   left: -25px;
-`
+`;
 
 export const SearchInput: React.FC = (props: any) => {
   const dispatch = useDispatch();
@@ -100,6 +100,20 @@ export const SearchInput: React.FC = (props: any) => {
     <Container>
       <SearchTextInputContainer>
         <SearchTextInput
+          onFocus={() => {
+            setOpen(true);
+            // fetch suggest
+            if (!suggests.length) {
+              dispatch({
+                type: 'searchInput/fetchSuggests',
+                text,
+              });
+            }
+          }}
+          // onBlur={() => {
+          // }}
+          // onEndEditing={() => {
+          // }}
           onChangeText={handleInputSearchText}
           onSubmitEditing={onSubmitEditing}
           selectionColor={'rebeccapurple'}
@@ -115,5 +129,5 @@ export const SearchInput: React.FC = (props: any) => {
     </Container>
   );
 
-}
+};
 

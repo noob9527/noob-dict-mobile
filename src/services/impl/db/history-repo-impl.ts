@@ -1,0 +1,266 @@
+import { ISearchHistory, SearchHistory } from '../../../model/history';
+import database from './database';
+import logger from '../../../utils/logger';
+import { HistoryCreateAtSearchParam, HistoryUpdateAtSearchParam } from '../../db/history-service';
+import { HistoryRepo } from '../../db/history-repo';
+import { injectable } from 'inversify';
+
+const historyInsertSql = `
+insert into histories 
+  (
+    id,
+    user_id,
+    text,
+    context,
+    create_at,
+    update_at,
+    search_result
+  ) 
+  values
+  (
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?
+  )
+`;
+
+const historyUpdateSql = `
+update histories 
+set 
+  user_id = ?,
+  text = ?,
+  context = ?,
+  create_at = ?,
+  update_at = ?,
+  search_result = ?
+where id = ?
+`;
+
+@injectable()
+export class HistoryRepoImpl implements HistoryRepo {
+  private log = logger.getLogger(HistoryRepoImpl.name);
+
+  findById(id: string): Promise<ISearchHistory | null | undefined> {
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          'select * from histories where id = ?',
+          [id],
+          (tx, res) => {
+            const items = Array.from({ length: res.rows.length }).map((e, i) => {
+              return res.rows.item(i);
+            })
+              .map(e => ({
+                ...e,
+                context: JSON.parse(e.context),
+                search_result: JSON.parse(e.search_result),
+              }))
+              .map(e => SearchHistory.wrap(e));
+            resolve(items.length ? items[0] : null);
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
+
+  async getById(id: string): Promise<ISearchHistory> {
+    const res = await this.findById(id);
+    if (!res) throw Error('resource not found');
+    return res;
+  }
+
+  findAll(text: string, user_id: string): Promise<ISearchHistory[]> {
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          'select * from histories where text = ? and user_id = ?',
+          [text, user_id],
+          (tx, res) => {
+            const items = Array.from({ length: res.rows.length }).map((e, i) => {
+              return res.rows.item(i);
+            })
+              .map(e => ({
+                ...e,
+                context: JSON.parse(e.context),
+                search_result: JSON.parse(e.search_result),
+              }))
+              .map(e => SearchHistory.wrap(e));
+            resolve(items);
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
+
+  async save(history: ISearchHistory): Promise<ISearchHistory> {
+    this.log.debug(this.save.name, history.id, history.user_id, history.text);
+
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          historyInsertSql,
+          [
+            history.id,
+            history.user_id,
+            history.text,
+            JSON.stringify(history.context),
+            history.create_at,
+            history.update_at,
+            JSON.stringify(history.search_result),
+          ],
+          (tx, res) => {
+            resolve(history);
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
+
+  async update(history: ISearchHistory): Promise<ISearchHistory> {
+    this.log.debug(this.update.name, history.id, history.user_id, history.text);
+
+    await new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          historyUpdateSql,
+          [
+            history.user_id,
+            history.text,
+            JSON.stringify(history.context),
+            history.create_at,
+            history.update_at,
+            JSON.stringify(history.search_result),
+            history.id,
+          ],
+          (tx, res) => {
+            resolve()
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+    return this.getById(history.id);
+  }
+
+  fetchSourceSuggest(text: string, user_id: string): Promise<string[]> {
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          `select * from histories where user_id = ? order by update_at desc`,
+          [user_id],
+          (tx, res) => {
+            const items = Array.from({ length: res.rows.length }).map((e, i) => {
+              return res.rows.item(i);
+            })
+              .filter(
+                e => !!e.context?.source?.trim()
+                  && e.context!!.source!!.includes(text),
+              )
+              .map(e => e.text);
+            resolve(items);
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
+
+  searchByCreateAt(param: HistoryCreateAtSearchParam): Promise<ISearchHistory[]> {
+    this.log.debug(this.searchByCreateAt.name);
+    const lowerBound = param.createAtBetween.lowerBound;
+    const upperBound = param.createAtBetween.upperBound ?? (new Date()).getTime();
+    const includeLower = param.createAtBetween.includeLower ?? true;
+    const includeUpper = param.createAtBetween.includeUpper ?? true;
+    const gt_op = includeLower ? '>=' : '>';
+    const lt_op = includeUpper ? '<=' : '<';
+
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          `select * from histories order by create_at desc`,
+          [],
+          // `select * from histories where user_id = ? order by create_at desc`,
+          // [param.user_id],
+          // `select * from histories where user_id = ? and create_at ${gt_op} ? and create_at ${lt_op} ? order by create_at desc`,
+          // [param.user_id, lowerBound, upperBound],
+          (tx, res) => {
+            const items = Array.from({ length: res.rows.length }).map((e, i) => {
+              return res.rows.item(i);
+            })
+              .map(e => ({
+                ...e,
+                context: JSON.parse(e.context),
+                search_result: JSON.parse(e.search_result),
+              }))
+              .map(e => SearchHistory.wrap(e));
+            resolve(items);
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
+
+  searchByUpdateAt(param: HistoryUpdateAtSearchParam): Promise<ISearchHistory[]> {
+    const lowerBound = param.updateAtBetween.lowerBound;
+    const upperBound = param.updateAtBetween.upperBound ?? (new Date()).getTime();
+    const includeLower = param.updateAtBetween.includeLower ?? true;
+    const includeUpper = param.updateAtBetween.includeUpper ?? true;
+    const gt_op = includeLower ? '>=' : '>';
+    const lt_op = includeUpper ? '<=' : '<';
+
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          `select * from histories where user_id = ? and update_at ${gt_op} ? and update_at ${lt_op} ?`,
+          [lowerBound, upperBound],
+          (tx, res) => {
+            const items = Array.from({ length: res.rows.length }).map((e, i) => {
+              return res.rows.item(i);
+            })
+              .map(e => ({
+                ...e,
+                context: JSON.parse(e.context),
+                search_result: JSON.parse(e.search_result),
+              }))
+              .map(e => SearchHistory.wrap(e));
+            resolve(items);
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
+
+  clearAll(): Promise<void> {
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          'delete from histories;',
+          [],
+          (tx, res) => {
+            this.log.debug('truncate success');
+            resolve();
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
+
+}

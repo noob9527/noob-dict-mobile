@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { useAuthRequest } from 'expo-auth-session';
 import { useDispatch } from 'react-redux';
-import { githubOption } from '../../services/social-login';
+import { githubOption } from '../../config/social-login';
 import logger from '../../utils/logger';
 
 const Container = styled.View`

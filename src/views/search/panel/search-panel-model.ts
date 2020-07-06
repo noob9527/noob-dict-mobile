@@ -86,20 +86,20 @@ function* fetchResults(action: FetchResultsAction) {
       primaryResult = result;
     }
 
-    // if (result && SearchResults.isSuccessResult(result)) {
-    //   const history = {
-    //     text,
-    //     user_id: rootState.currentUser?.id ?? '',
-    //     search_result: simplifyResult(result)
-    //   };
-    //   // fetch from notes
-    //   yield put({
-    //     type: 'searchNote/fetchOrCreateNote',
-    //     payload: { history },
-    //   });
-    //   yield put(push(`/search/engine_view/${result.engine}`));
-    //   break;
-    // }
+    if (result && SearchResults.isSuccessResult(result)) {
+      const history = {
+        text,
+        user_id: rootState.currentUser?.id ?? '',
+        search_result: simplifyResult(result)
+      };
+      // fetch from notes
+      yield put({
+        type: 'searchNote/fetchOrCreateNote',
+        payload: { history },
+      });
+      // yield put(push(`/search/engine_view/${result.engine}`));
+      break;
+    }
   }
 
   yield put({
@@ -108,6 +108,11 @@ function* fetchResults(action: FetchResultsAction) {
       translatedText: text,
       primaryResult,
     },
+  });
+
+  // dismiss keyboard
+  yield put({
+    type: '_transient/closeKeyboard',
   });
 }
 

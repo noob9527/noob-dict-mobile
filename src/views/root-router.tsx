@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, View } from 'react-native';
@@ -10,8 +11,10 @@ import { useContext, useEffect } from 'react';
 import { ThemeContext } from 'styled-components/native';
 import ColorId from '../styles/color-id';
 import * as Linking from 'expo-linking';
+import HistoryView from './history/history-view';
+import { DeveloperView } from './debug/developer-view';
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
 
 export function RootRouter() {
   const theme = useContext(ThemeContext);
@@ -42,17 +45,22 @@ export function RootRouter() {
                 case 'Search':
                   iconName = 'search1';
                   break;
-                case 'App':
-                  iconName = 'book';
-                  break;
                 case 'Profile':
-                  iconName = 'user'
+                  iconName = 'user';
+                  break;
+                // case 'Notes':
+                //   iconName = 'book';
+                //   break;
+                case 'History':
+                  return (<MaterialIcons name="history" size={size} color={color}/>);
+                case 'Debug':
+                  iconName = 'tool';
                   break;
               }
               // You can return any component that you like here!
               return <AntDesign name={iconName} size={size} color={color}/>;
-            }
-          }
+            },
+          };
         }}
         tabBarOptions={{
           style: {
@@ -70,9 +78,11 @@ export function RootRouter() {
         {/*  name="App"*/}
         {/*  component={AppView}*/}
         {/*/>*/}
+        <Tab.Screen name="History" component={HistoryView}/>
         <Tab.Screen name="Profile" component={ProfilePage}/>
+        <Tab.Screen name="Debug" component={DeveloperView}/>
       </Tab.Navigator>
     </NavigationContainer>
-  )
+  );
 }
 

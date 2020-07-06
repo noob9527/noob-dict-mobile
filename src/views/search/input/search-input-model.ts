@@ -49,9 +49,7 @@ const effects = {
   * fetchSuggests(action) {
     const rootState: RootState = yield select(state => state.root);
     const searchService = rendererContainer.get<SearchService>(SearchServiceToken);
-    // const suggests = yield call([searchService, searchService.fetchSuggests], action.text, rootState.currentUser?.id ?? '');
-    console.log(action);
-    const suggests = yield call([searchService, searchService.fetchSuggests], action.text, '');
+    const suggests = yield call([searchService, searchService.fetchSuggests], action.text, rootState.currentUser?.id ?? '');
     yield put({
       type: 'searchInput/mergeState',
       payload: {

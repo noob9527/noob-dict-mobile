@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { LocalStorageService } from '../LocalStorageService';
+import { LocalStorageService } from '../local-storage-service';
 import AsyncStorage from '@react-native-community/async-storage';
 
 

@@ -30,8 +30,6 @@ export const ProfilePage = () => {
   const dispatch = useDispatch();
   const { currentUser } = rootState;
 
-  console.log(currentUser);
-
   function logout() {
     dispatch({
       type: 'profile/logout',

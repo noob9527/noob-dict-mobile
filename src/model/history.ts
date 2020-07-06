@@ -1,7 +1,8 @@
 import { Context, ISimpleSearchResult } from './search-domain';
+import { string2date } from '../utils/date';
 
 export interface ISearchHistory {
-  id?: Maybe<number>
+  id?: Maybe<string>
   user_id: string
   text: string
   context: Context | null | undefined
@@ -11,7 +12,7 @@ export interface ISearchHistory {
 }
 
 export class SearchHistory implements ISearchHistory {
-  id?: Maybe<number>;
+  id?: Maybe<string>;
   user_id: string = '';
   text: string = '';
   context = null;
@@ -26,11 +27,11 @@ export class SearchHistory implements ISearchHistory {
     // server may send iso 8601 format string
     // noinspection SuspiciousTypeOfGuard
     if (typeof res.create_at == 'string') {
-      res.create_at = new Date(res.create_at).valueOf()
+      res.create_at = string2date(res.create_at).valueOf();
     }
     // noinspection SuspiciousTypeOfGuard
     if (typeof res.update_at == 'string') {
-      res.update_at = new Date(res.update_at).valueOf()
+      res.update_at =  string2date(res.update_at).valueOf();
     }
 
     return res;

@@ -63,7 +63,7 @@ export const SearchSuggests = () => {
 
   // 用户选择了自动补全项
   function onSelect(text: string) {
-    console.log('on select');
+    console.log('on select', text);
     dispatch({
       type: 'searchInput/searchTextChange',
       text,
@@ -72,6 +72,12 @@ export const SearchSuggests = () => {
   }
 
   function search(text: string) {
+    dispatch({
+      type: 'searchInput/mergeState',
+      payload: {
+        open: false,
+      },
+    });
     dispatch({
       type: 'searchPanel/fetchResults',
       text,
@@ -87,6 +93,7 @@ export const SearchSuggests = () => {
   return (
     <Container>
       <ListContainer
+        keyboardShouldPersistTaps={'always'}
         data={suggests}
         keyExtractor={(item: any) => item.entry}
         renderItem={({ item, index }) => <ListItem

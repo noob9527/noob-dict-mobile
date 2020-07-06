@@ -31,6 +31,7 @@
     "expo-linking": "^1.0.3",
     "expo-sqlite": "~8.2.1",
     "inversify": "^5.0.1",
+    "moment": "^2.27.0",
     "prop-types": "^15.7.2",
     "react": "16.11.0",
     "react-dom": "16.11.0",

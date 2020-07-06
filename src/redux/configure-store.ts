@@ -3,6 +3,8 @@ import * as models from '../views/models';
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { reduxPersistStoreEnhancer } from './persist/redux-persist-store-enhancer';
+import { registerUserChangeListener } from '../utils/axios';
+import { registerKeyboardEventListener } from './keyboard-event-listener';
 
 
 export function configureStore() {
@@ -23,11 +25,14 @@ export function configureStore() {
       applyMiddleware(
         sagaMiddleware,
       ),
-      reduxPersistStoreEnhancer,
+      // reduxPersistStoreEnhancer,
     ),
   );
 
   sagaMiddleware.run(manager.createRootSaga());
+
+  registerUserChangeListener(store);
+  registerKeyboardEventListener(store);
 
   return store;
 }

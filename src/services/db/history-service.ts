@@ -29,7 +29,7 @@ export interface HistoryService {
    * add history item to db
    * @param history
    */
-  add(history: ISearchHistory): Promise<ISearchHistory>
+  save(history: ISearchHistory): Promise<ISearchHistory>
 
   /**
    * update history item in db
@@ -37,6 +37,10 @@ export interface HistoryService {
    * @param history
    */
   update(history: ISearchHistory): Promise<ISearchHistory>
+
+  findById(id: string): Promise<ISearchHistory | null | undefined>
+
+  getById(id: string): Promise<ISearchHistory>
 
   /**
    * find history items by text

@@ -1,5 +1,5 @@
 import { User } from '../model/user';
-import { LoginOption } from './social-login';
+import { LoginOption } from '../config/social-login';
 
 export const UserServiceToken = Symbol.for('user-service');
 

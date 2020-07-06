@@ -17,7 +17,6 @@ export class CorsSearchService implements SearchService {
     if (text) {
       return getSuggests(text);
     } else {
-      return []
       // if text is empty string, we fetch from notes
       const notes = await this.noteService.fetchLatest(20, user_id);
       return notes.map(e => {
