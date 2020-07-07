@@ -6,8 +6,10 @@ import PronunciationList from './pronunciation-list';
 import WordFormList from './word-form-list';
 import MeaningList from './meaning-list';
 import ExampleList from './example-list';
+import { LineSeparator } from '../../themed-ui/line-separator';
+import { ThemedText } from '../../themed-ui/text/text';
 
-const ListContainer = styled(FlatList)`
+const ListContainer = styled.View`
 
 `;
 
@@ -32,7 +34,7 @@ const DefinitionItem: React.FC<DefinitionItemProp> = (props: DefinitionItemProp)
   ]);
   return (
     <ItemContainer>
-      <Text>{definition.partOfSpeech}</Text>
+      <ThemedText>{definition.partOfSpeech}</ThemedText>
       <PronunciationList pronunciations={definition.pronunciations}/>
       <WordFormList wordForms={definition.wordForms}/>
       <MeaningList meanings={definition.meanings}/>
@@ -49,7 +51,7 @@ const DefinitionList: React.FC<DefinitionListProp> = (props: DefinitionListProp)
         (
           <View key={i}>
             <DefinitionItem definition={def} key={i}/>
-            {i < definitions.length - 1 ? <hr/> : null}
+            {i < definitions.length - 1 ? <LineSeparator/> : null}
           </View>
         ),
       )}

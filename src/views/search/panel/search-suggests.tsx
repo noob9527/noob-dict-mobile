@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchInputState } from '../input/search-input-model';
 import { SearchPanelState } from './search-panel-model';
-import EngineView from '../views/engine/engine-view';
 import { ActivityIndicator, Animated, FlatList, Text } from 'react-native';
 import { Suggest } from '@noob9527/noob-dict-core';
 import ColorId from '../../../styles/color-id';
@@ -49,8 +48,8 @@ const ListItem: React.FC<{
       numberOfLines={1}
       ellipsizeMode='tail'
     >{suggest.explain}</SearchExplain>
-  </ListItemContainer>
-}
+  </ListItemContainer>;
+};
 
 export const SearchSuggests = () => {
   const {
@@ -86,8 +85,8 @@ export const SearchSuggests = () => {
 
   if (loadingSuggests) {
     return (<Container>
-      <ActivityIndicator size={'large'}/>
-    </Container>)
+      <ActivityIndicator color={'rebeccapurple'} size={60} style={{ bottom: 30 }}/>
+    </Container>);
   }
 
   return (
@@ -105,5 +104,5 @@ export const SearchSuggests = () => {
       </ListContainer>
     </Container>
   );
-}
+};
 

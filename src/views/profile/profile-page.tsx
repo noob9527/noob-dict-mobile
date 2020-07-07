@@ -15,6 +15,7 @@ const Container = styled(SafeAreaView)`
 `;
 
 const ContentContainer = styled.View`
+  padding: 20px;
   height: 100%;
   background-color: ${props => props.theme[ColorId.background]};
   justify-content: center;
@@ -39,7 +40,7 @@ export const ProfilePage = () => {
   return (
     <Container>
       <ContentContainer>
-        <Avatar source={{ uri: currentUser?.picture }}/>
+        <Avatar source={{ uri: currentUser?.picture }} style={{ marginBottom: 40 }}/>
         {/*<LoginButtonView/>*/}
         {
           currentUser

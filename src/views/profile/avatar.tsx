@@ -14,13 +14,14 @@ const IconContainer = styled.View`
 `;
 
 export interface AvatarProps {
+  style?: any
   source: { uri?: string | null }
 }
 
 export const Avatar: React.FC<AvatarProps> = (props) => {
   const theme = useContext(ThemeContext);
   return (
-    <IconContainer>
+    <IconContainer style={{...props.style}}>
       {
         !!props.source?.uri
           ? <Image
@@ -34,7 +35,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
               height: 100,
             }}
           />
-          : <FontAwesome name="user-circle-o" size={60} color={theme[ColorId.foreground]}/>
+          : <FontAwesome name="user-circle-o" size={100} color={theme[ColorId.foreground]}/>
       }
       {/*<AntDesign name={'user'} size={24} color={theme[ColorId.foreground]}/>;*/}
     </IconContainer>

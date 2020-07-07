@@ -15,11 +15,6 @@ const Container = styled.ScrollView`
 `;
 
 const ContentContainer = styled.View`
-  width: 90%;
-  margin: auto;
-  /*
-  padding-bottom: 200px;
-   */
 `;
 
 const StyledTitle = styled(Title)`

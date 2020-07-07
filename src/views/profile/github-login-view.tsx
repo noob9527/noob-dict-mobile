@@ -55,6 +55,7 @@ export const GithubLoginView: React.FC = () => {
   return (
     <Container>
       <StyledButton
+        color={'rebeccapurple'}
         disabled={!request}
         title={'Github Login'}
         onPress={onPress}

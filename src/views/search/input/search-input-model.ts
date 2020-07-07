@@ -4,6 +4,7 @@ import { Model } from '../../../redux/model-manager';
 import { SearchService, SearchServiceToken } from '../../../services/search-service';
 import { rendererContainer } from '../../../services/impl/renderer-container';
 import { RootState } from '../../root-model';
+import { NoteService, NoteServiceToken } from '../../../services/db/note-service';
 
 export interface SearchInputState {
   text: string,
@@ -49,7 +50,24 @@ const effects = {
   * fetchSuggests(action) {
     const rootState: RootState = yield select(state => state.root);
     const searchService = rendererContainer.get<SearchService>(SearchServiceToken);
-    const suggests = yield call([searchService, searchService.fetchSuggests], action.text, rootState.currentUser?.id ?? '');
+    const noteService = rendererContainer.get<NoteService>(NoteServiceToken);
+    const { text } = action;
+    let suggests: Suggest[];
+
+    if (text) {
+      suggests = yield call([searchService, searchService.fetchSuggests], action.text, rootState.currentUser?.id ?? '');
+    } else {
+      // if text is empty, we fetch suggests from notes
+      const notes = yield call([noteService, noteService.fetchLatest], 20, rootState.currentUser?.id ?? '');
+      suggests = notes.map(e => {
+        const firstMeaning = e.search_result?.definitions[0]?.meanings[0];
+        return {
+          entry: e.text,
+          explain: firstMeaning?.ZH ?? firstMeaning?.EN,
+        };
+      });
+    }
+
     yield put({
       type: 'searchInput/mergeState',
       payload: {

@@ -86,13 +86,14 @@ export class NoteServiceImpl implements NoteService {
   }
 
   async fetch(text: string, user_id: string): Promise<INote | null | undefined> {
+    logger.debug(this.fetch.name, text, user_id);
     const res = await this.repo.fetch(text, user_id);
     if (!res) return res;
     res.histories = await this.historyService.findAll(text, user_id);
     return Note.wrap(res);
   }
 
-  fetchLatest(limit: number, user_id: string): Promise<INote[]> {
+  async fetchLatest(limit: number, user_id: string): Promise<INote[]> {
     return this.repo.fetchLatest(limit, user_id);
   }
 

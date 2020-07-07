@@ -9,10 +9,11 @@ import { simplifyResult } from '../../../model/search-domain';
 export type SearchResultMap = { [index in EngineIdentifier]?: Maybe<SearchResult> };
 
 export interface SearchPanelState {
-  translatedText: string,
-  engines: EngineIdentifier[],
-  primaryResult: Maybe<SearchResult>,
-  searchResultMap: SearchResultMap,
+  loading: boolean
+  translatedText: string
+  engines: EngineIdentifier[]
+  primaryResult: Maybe<SearchResult>
+  searchResultMap: SearchResultMap
 }
 
 export interface SearchPanelModel extends Model {
@@ -51,11 +52,18 @@ function* fetchResults(action: FetchResultsAction) {
   const engines: EngineIdentifier[] = yield select((state: any) => state.searchPanel.engines);
   const rootState: RootState = yield select((state: any) => state.root);
 
+  // dismiss keyboard
+  yield put({
+    type: '_transient/closeKeyboard',
+  });
+
   // reset translatedText
+  // set loading
   yield put({
     type: 'searchPanel/mergeState',
     payload: {
       translatedText: '',
+      loading: true,
     },
   });
 
@@ -90,7 +98,7 @@ function* fetchResults(action: FetchResultsAction) {
       const history = {
         text,
         user_id: rootState.currentUser?.id ?? '',
-        search_result: simplifyResult(result)
+        search_result: simplifyResult(result),
       };
       // fetch from notes
       yield put({
@@ -107,13 +115,10 @@ function* fetchResults(action: FetchResultsAction) {
     payload: {
       translatedText: text,
       primaryResult,
+      loading: false,
     },
   });
 
-  // dismiss keyboard
-  yield put({
-    type: '_transient/closeKeyboard',
-  });
 }
 
 const effects = {
@@ -143,7 +148,11 @@ const reducers = {
 const searchPanelModel: SearchPanelModel = {
   namespace: 'searchPanel',
   state: {
-    engines: [EngineIdentifier.BING, EngineIdentifier.CAMBRIDGE],
+    loading: false,
+    engines: [
+      EngineIdentifier.BING,
+      // EngineIdentifier.CAMBRIDGE,
+    ],
     translatedText: '',
     primaryResult: null,
     searchResultMap: {

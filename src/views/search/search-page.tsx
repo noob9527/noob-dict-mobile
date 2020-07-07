@@ -22,8 +22,6 @@ const Header = styled.View`
 `;
 
 const Content = styled.View`
-  display: flex;
-  flex-direction: column;
   height: 100%;
   background-color: ${props => props.theme[ColorId.background]};
 `;
