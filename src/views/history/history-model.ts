@@ -36,7 +36,6 @@ const effects = {
     const historyState: HistoryState = yield select((state: any) => state.history);
     const { searchParams } = historyState;
     searchParams.user_id = rootState?.currentUser?.id ?? '';
-    console.log('user id', searchParams.user_id)
     let histories = yield call([historyService, historyService.searchByCreateAt], searchParams);
     log.debug('fetchLatestHistories size: ', histories.length);
     yield put({

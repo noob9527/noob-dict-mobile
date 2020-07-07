@@ -5,6 +5,7 @@ enum ColorId {
   background = 'background',
   foreground = 'foreground',
   foreground_secondary = 'foreground_secondary',
+  foreground_disabled = 'foreground_disabled',
 
   status_bar_background = 'status_bar_background',
 

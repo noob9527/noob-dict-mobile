@@ -5771,6 +5771,15 @@ expo-auth-session@~1.4.0:
     invariant "^2.2.4"
     qs "6.9.1"
 
+expo-av@~8.2.1:
+  version "8.2.1"
+  resolved "https://registry.npm.taobao.org/expo-av/download/expo-av-8.2.1.tgz#cab16a5f0766b84a7c2e05e04523cb73a0cd4e9b"
+  integrity sha1-yrFqXwdmuEp8LgXgRSPLc6DNTps=
+  dependencies:
+    lodash "^4.17.15"
+    nullthrows "^1.1.0"
+    prop-types "15.7.2"
+
 expo-cli@^3.21.13:
   version "3.21.13"
   resolved "https://registry.npm.taobao.org/expo-cli/download/expo-cli-3.21.13.tgz#94e7b0f117f17df24679691a2763bad4b5ac4d61"

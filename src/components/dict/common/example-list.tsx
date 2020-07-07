@@ -1,5 +1,5 @@
 import React from 'react';
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons';
 import { View, Text, Animated, FlatList } from 'react-native';
 import { Example, Language } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
@@ -14,12 +14,6 @@ const ListContainer = styled.View`
 `;
 
 const ItemContainer = styled.View`
-  .ant-button {
-    height: unset;
-  }
-  .anticon {
-    color: ${props => props.theme[ColorId.word_link]};
-  }
   flex-direction: row;
   margin-top: 10px;
 `;
