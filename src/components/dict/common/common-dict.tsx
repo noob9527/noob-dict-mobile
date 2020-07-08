@@ -9,7 +9,6 @@ import DoYouMeanGroup from './do-you-mean-group';
 
 
 const Container = styled.View`
-  height: 100%;
 `;
 
 interface CommonEngineListProps {
@@ -34,5 +33,4 @@ const CommonDict: React.FC<CommonEngineListProps> = (props: CommonEngineListProp
 };
 
 // https://reactjs.org/docs/react-api.html#reactmemo
-// export default React.memo(CommonDict);
-export default CommonDict;
+export default React.memo(CommonDict);

@@ -11,12 +11,14 @@ const store: any = configureStore();
 
 store.dispatch({ type: 'root/init' });
 
-const App = () => (
-  <Provider store={store}>
-    {/*<PersistGate loading={<ActivityIndicator/>} persistor={store.persistor}>*/}
-    <RootView/>
-    {/*</PersistGate>*/}
-  </Provider>
-);
+const App = () => {
+  return (
+    <Provider store={store}>
+      {/*<PersistGate loading={<ActivityIndicator/>} persistor={store.persistor}>*/}
+      <RootView/>
+      {/*</PersistGate>*/}
+    </Provider>
+  );
+};
 
 export default App;

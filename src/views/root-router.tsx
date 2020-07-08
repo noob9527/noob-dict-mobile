@@ -13,6 +13,7 @@ import ColorId from '../styles/color-id';
 import * as Linking from 'expo-linking';
 import HistoryView from './history/history-view';
 import { DeveloperView } from './debug/developer-view';
+import { rootNavigationRef } from './root-navigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,6 +34,7 @@ export function RootRouter() {
 
   return (
     <NavigationContainer
+      ref={rootNavigationRef}
       // linking={linking}
       // fallback={<SearchPage/>}
     >

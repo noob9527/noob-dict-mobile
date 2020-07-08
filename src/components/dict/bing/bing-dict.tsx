@@ -11,7 +11,7 @@ import { ThemedEmpty } from '../../themed-ui/empty/empty';
 import DoYouMeanGroup from '../common/do-you-mean-group';
 import { LineSeparator } from '../../themed-ui/line-separator';
 
-const Container = styled.ScrollView`
+const Container = styled.View`
 `;
 
 const ContentContainer = styled.View`

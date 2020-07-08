@@ -5,6 +5,7 @@ import { Model } from '../../../redux/model-manager';
 import { rendererContainer } from '../../../services/impl/renderer-container';
 import { SearchService, SearchServiceToken } from '../../../services/search-service';
 import { simplifyResult } from '../../../model/search-domain';
+import { rootNavigate } from '../../root-navigation';
 
 export type SearchResultMap = { [index in EngineIdentifier]?: Maybe<SearchResult> };
 
@@ -105,7 +106,13 @@ function* fetchResults(action: FetchResultsAction) {
         type: 'searchNote/fetchOrCreateNote',
         payload: { history },
       });
+      // navigate to corresponding result view
+      rootNavigate('Search', { screen: result.engine });
       // yield put(push(`/search/engine_view/${result.engine}`));
+      // yield put({
+      //   type: 'searchPanel/mergeState',
+      //   payload: { currentEngine: result.engine },
+      // });
       break;
     }
   }
@@ -151,7 +158,7 @@ const searchPanelModel: SearchPanelModel = {
     loading: false,
     engines: [
       EngineIdentifier.BING,
-      // EngineIdentifier.CAMBRIDGE,
+      EngineIdentifier.CAMBRIDGE,
     ],
     translatedText: '',
     primaryResult: null,

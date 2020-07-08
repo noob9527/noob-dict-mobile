@@ -25,6 +25,8 @@ const Speaker: React.FC<SpeakerProp> = (props) => {
       }, {}, (...args) => {
       }, true).then((res) => {
         sound = res.sound;
+      }).catch(err => {
+        log.error(err);
       });
     }
   }, [src]);
