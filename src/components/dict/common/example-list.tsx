@@ -1,21 +1,19 @@
 import React from 'react';
-import { AntDesign } from '@expo/vector-icons';
-import { View, Text, Animated, FlatList } from 'react-native';
 import { Example, Language } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
-import { useDispatch } from 'react-redux';
 import Highlight from '../shared/highlight/highlight';
-import ColorId from '../../../styles/color-id';
-import { ThemedTooltip } from '../../themed-ui/tooltip/tooltip';
 import { ThemedText } from '../../themed-ui/text/text';
 
-const ListContainer = styled.View`
+const Container = styled.View`
+  margin-top: 10px;
+`;
 
+const ListContainer = styled.View`
 `;
 
 const ItemContainer = styled.View`
   flex-direction: row;
-  margin-top: 10px;
+  margin-top: 8px;
 `;
 
 const ItemContent = styled.View`
@@ -49,7 +47,7 @@ const ExampleItem: React.FC<ExampleItemProp> = (props: ExampleItemProp) => {
         {/*}}>*/}
         {/*  <AntDesign name="file-add"/>*/}
         {/*</Button>*/}
-        <ThemedText style={{ marginTop: 3 }}>{zh}</ThemedText>
+        {zh ? <ThemedText style={{ marginTop: 3 }}>{zh}</ThemedText> : null}
       </ItemContent>
     </ItemContainer>
   );
@@ -63,14 +61,14 @@ interface ExampleListProp {
 const ExampleList: React.FC<ExampleListProp> = (props: ExampleListProp) => {
   const { examples, highlightWordSet } = props;
   return (
-    <>
+    <Container>
       <ThemedText>Examples:</ThemedText>
       <ListContainer>
         {examples.map((def, i) =>
           (<ExampleItem example={def} highlightWordSet={highlightWordSet} key={i}/>))
         }
       </ListContainer>
-    </>
+    </Container>
   );
 };
 

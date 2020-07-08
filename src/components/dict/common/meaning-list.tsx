@@ -1,15 +1,23 @@
 import React from 'react';
-import { Text } from 'react-native';
 import { Meaning } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
 import { ThemedText } from '../../themed-ui/text/text';
 
-const ItemContainer = styled.View`
-
-`;
+const Container = styled.View`
+  margin-top: 10px;
+`
 
 const ListContainer = styled.View`
+`;
 
+const ItemContainer = styled.View`
+  flex-direction: row;
+  margin-top: 8px;
+`;
+
+const ItemContent = styled.View`
+  flex-direction: column;
+  padding-left: 8px;
 `;
 
 interface MeaningItemProp {
@@ -24,8 +32,11 @@ const MeaningItem: React.FC<MeaningItemProp> = (props: MeaningItemProp) => {
   const { meaning } = props;
   return (
     <ItemContainer>
-      <ThemedText>{meaning.EN}</ThemedText>
-      <ThemedText>{meaning.ZH}</ThemedText>
+      <ThemedText>{'\u2022'}</ThemedText>
+      <ItemContent>
+        <ThemedText>{meaning.EN}</ThemedText>
+        {meaning.ZH ? <ThemedText style={{ marginTop: 3 }}>{meaning.ZH}</ThemedText> : null}
+      </ItemContent>
     </ItemContainer>
   );
 };
@@ -33,12 +44,12 @@ const MeaningItem: React.FC<MeaningItemProp> = (props: MeaningItemProp) => {
 const MeaningList: React.FC<MeaningListProp> = (props: MeaningListProp) => {
   const { meanings } = props;
   return (
-    <>
+    <Container>
       <ThemedText>Meanings:</ThemedText>
       <ListContainer>
         {meanings.map((def, i) => (<MeaningItem meaning={def} key={i}/>))}
       </ListContainer>
-    </>
+    </Container>
   );
 };
 

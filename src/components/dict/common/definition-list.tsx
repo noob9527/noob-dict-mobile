@@ -51,7 +51,10 @@ const DefinitionList: React.FC<DefinitionListProp> = (props: DefinitionListProp)
         (
           <View key={i}>
             <DefinitionItem definition={def} key={i}/>
-            {i < definitions.length - 1 ? <LineSeparator/> : null}
+            {i < definitions.length - 1 ? <LineSeparator style={{
+              marginTop: 13,
+              marginBottom: 10,
+            }}/> : null}
           </View>
         ),
       )}

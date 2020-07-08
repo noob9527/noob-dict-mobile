@@ -16,16 +16,18 @@ interface WordLinkProps {
 const WordLink: React.FC<WordLinkProps> = (props) => {
   const { word } = props;
   const dispatch = useDispatch();
-  return <StyledWordLink
-    onClick={() => {
-      dispatch({
-        type: 'search/search',
-        payload: {
-          text: word,
-        },
-      });
-    }}
-  >{word}</StyledWordLink>;
+  return (
+    <StyledWordLink
+      onPress={() => {
+        dispatch({
+          type: 'search/search',
+          payload: {
+            text: word,
+          },
+        });
+      }}
+    >{word}</StyledWordLink>
+  );
 };
 
 export default WordLink;

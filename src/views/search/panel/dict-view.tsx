@@ -39,7 +39,13 @@ export const DictView: React.FC = () => {
   }
 
   return (
-    <><Container>{component}</Container></>
+    <><Container
+      contentContainerStyle={{
+        paddingTop: 15,
+        minHeight: '100%',
+        paddingBottom: 150,
+      }}
+    >{component}</Container></>
   );
 };
 

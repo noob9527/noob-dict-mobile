@@ -5,23 +5,21 @@ import styled from 'styled-components/native';
 import _ from 'lodash';
 import WordLink from '../shared/word-link/word-link';
 import { ThemedText } from '../../themed-ui/text/text';
+import { LineSeparator } from '../../themed-ui/line-separator';
+import Title from './title';
 
 const GroupContainer = styled.View`
 `;
 const ListContainer = styled.View`
 `;
 const ItemContainer = styled.View`
-  View:nth-child(1) {
-    margin-right: 15px;  
-  }
+  flex-direction: row;
 `;
 
-const LineSeparator = styled.View`
-
-`
-
-const GroupTitle = styled(ThemedText)`
-  margin-bottom: 0;
+const GroupTitle = styled(Title)`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
   font-weight: bold;
 `;
 
@@ -47,7 +45,7 @@ const DoYouMeanItemComponent: React.FC<DoYouMeanItemProp> = (props) => {
   return (
     <ItemContainer>
       <WordLink word={doYouMeanItem.suggest.entry}/>
-      <Text>{doYouMeanItem.suggest.explain}</Text>
+      <ThemedText style={{ marginLeft: 8 }}>{doYouMeanItem.suggest.explain}</ThemedText>
     </ItemContainer>
   );
 };

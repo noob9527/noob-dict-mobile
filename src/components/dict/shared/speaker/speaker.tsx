@@ -43,6 +43,7 @@ const Speaker: React.FC<SpeakerProp> = (props) => {
 
   return (
     <TouchableOpacity
+      disabled={!src}
       onPress={handlePress}
       style={{
         margin: 'auto',

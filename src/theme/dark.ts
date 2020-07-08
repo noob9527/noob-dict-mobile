@@ -29,6 +29,7 @@ dark[ColorId.button_foreground] = Color('white');
 // tabs
 dark[ColorId.tab_border] = null;
 dark[ColorId.tab_activeForeground] = Color('#FFFFFF');
+dark[ColorId.tab_indicator] = dark[ColorId.tab_activeForeground]?.darken(0.4);
 dark[ColorId.tab_inactiveForeground] = dark[ColorId.tab_activeForeground]?.fade(0.5);
 
 dark[ColorId.tab_activeBackground] = dark[ColorId.background];

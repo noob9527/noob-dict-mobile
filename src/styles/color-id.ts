@@ -25,6 +25,7 @@ enum ColorId {
 
   // tabs
   tab_border = 'tab.border',
+  tab_indicator = 'tab.indicator',
   tab_activeForeground = 'tab.activeForeground',
   tab_inactiveForeground = 'tab.inactiveForeground',
 

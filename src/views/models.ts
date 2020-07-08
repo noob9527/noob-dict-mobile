@@ -7,9 +7,11 @@ import { historyModel } from './history/history-model';
 import { developerModel } from './debug/developer-model';
 import { searchNoteModel } from './search/note/search-note-model';
 import { transientModel } from '../model/transient-model';
+import { searchModel } from './search/search-model';
 
 export {
   app,
+  searchModel,
   searchInputModel,
   searchPanelModel,
   searchNoteModel,

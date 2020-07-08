@@ -29,7 +29,7 @@ export const SearchTabs: React.FC = () => {
           },
           indicatorStyle: {
             // height: 0,
-            backgroundColor: theme[ColorId.tab_activeForeground],
+            backgroundColor: theme[ColorId.tab_indicator],
           },
           style: {
             height: 30,

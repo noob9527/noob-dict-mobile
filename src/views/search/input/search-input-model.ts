@@ -27,7 +27,6 @@ const state: SearchInputState = {
 const effects = {
   // manually input search text
   * inputSearchText(action) {
-    console.log(action);
     yield put({
       type: 'searchInput/mergeState',
       payload: {
