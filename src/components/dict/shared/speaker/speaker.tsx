@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
+import { TouchableHighlight, TouchableOpacity } from 'react-native';
 import { ThemeContext } from 'styled-components/native';
 import ColorId from '../../../../styles/color-id';
 import { Audio } from 'expo-av';
@@ -42,7 +42,7 @@ const Speaker: React.FC<SpeakerProp> = (props) => {
   }
 
   return (
-    <TouchableOpacity
+    <TouchableHighlight
       disabled={!src}
       onPress={handlePress}
       style={{
@@ -57,7 +57,7 @@ const Speaker: React.FC<SpeakerProp> = (props) => {
         size={15}
         color={color}
       />
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 

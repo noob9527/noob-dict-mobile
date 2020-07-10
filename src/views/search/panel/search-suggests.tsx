@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchInputState } from '../input/search-input-model';
 import { SearchPanelState } from './search-panel-model';
@@ -52,6 +52,7 @@ const ListItem: React.FC<{
 };
 
 export const SearchSuggests = () => {
+  const theme = useTheme();
   const {
     text,
     suggests,
@@ -85,7 +86,7 @@ export const SearchSuggests = () => {
 
   if (loadingSuggests) {
     return (<Container>
-      <ActivityIndicator color={'rebeccapurple'} size={60} style={{ bottom: 30 }}/>
+      <ActivityIndicator color={theme[ColorId.foreground]} size={60} style={{ bottom: 30 }}/>
     </Container>);
   }
 

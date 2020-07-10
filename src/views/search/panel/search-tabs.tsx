@@ -3,11 +3,11 @@ import { Dimensions } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 import ColorId from '../../../styles/color-id';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { DictView } from './dict-view';
+import { SearchTabItem } from './search-tab-item';
 
 const Tab = createMaterialTopTabNavigator();
 
-const Container = styled.View`
+const Container = styled.TouchableWithoutFeedback`
  flex: 1;
 `;
 
@@ -37,8 +37,8 @@ export const SearchTabs: React.FC = () => {
           },
         }}
       >
-        <Tab.Screen name="BING" component={DictView}/>
-        <Tab.Screen name="CAMBRIDGE" component={DictView}/>
+        <Tab.Screen name="BING" component={SearchTabItem}/>
+        <Tab.Screen name="CAMBRIDGE" component={SearchTabItem}/>
       </Tab.Navigator>
     </Container>
   );

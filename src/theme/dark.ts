@@ -18,6 +18,7 @@ dark[ColorId.word_highlight] = Color('rebeccapurple').lighten(0.5);
 
 // input
 dark[ColorId.input_foreground] = Color('#D4D4D4');
+dark[ColorId.input_placeholder] = dark[ColorId.input_foreground]?.darken(0.4);
 dark[ColorId.input_background] = Color('#3C3C3C');
 dark[ColorId.input_border] = null;
 

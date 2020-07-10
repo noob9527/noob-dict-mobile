@@ -68,6 +68,11 @@ function* fetchResults(action: FetchResultsAction) {
     },
   });
 
+  // reset notes
+  yield put({
+    type: 'searchNote/reset',
+  });
+
   yield all([
     // fetch engines result
     ...engines.map(engine => {

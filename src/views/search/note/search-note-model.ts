@@ -23,9 +23,10 @@ export interface DataWrapper<T> {
 }
 
 export interface SearchNoteState {
-  noteInDb: Maybe<INote>,
-  suggests: string[],
-  loadingSuggests: boolean,
+  showSearchNote: boolean
+  noteInDb: Maybe<INote>
+  suggests: string[]
+  loadingSuggests: boolean
   histories: {
     [index: number]: DataWrapper<ISearchHistory>
   }
@@ -36,6 +37,7 @@ export interface SearchNoteModel extends Model {
 }
 
 const state: SearchNoteState = {
+  showSearchNote: false,
   suggests: [],
   loadingSuggests: false,
   noteInDb: null,
@@ -170,6 +172,9 @@ const effects = {
 };
 
 const reducers = {
+  reset(s, action) {
+    return { ...state };
+  },
   startSyncHistoryContext(state, action) {
     const { history } = action.payload;
     const oldHistoryWrapper = state.histories[history.id];
@@ -262,7 +267,12 @@ const reducers = {
       ...action.payload,
     };
   },
-
+  toggleSearchNote(state) {
+    return {
+      ...state,
+      showSearchNote: !state.showSearchNote,
+    };
+  },
 };
 
 export const searchNoteModel: SearchNoteModel = {

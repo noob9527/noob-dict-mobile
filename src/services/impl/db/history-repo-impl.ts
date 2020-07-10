@@ -11,13 +11,15 @@ insert into histories
     id,
     user_id,
     text,
-    context,
+    context_paragraph,
+    context_source,
     create_at,
     update_at,
     search_result
   ) 
   values
   (
+    ?,
     ?,
     ?,
     ?,
@@ -33,16 +35,29 @@ update histories
 set 
   user_id = ?,
   text = ?,
-  context = ?,
+  context_paragraph = ?,
+  context_source = ?,
   create_at = ?,
   update_at = ?,
   search_result = ?
 where id = ?
 `;
 
+function row2obj(e: any) {
+  return SearchHistory.wrap({
+    ...e,
+    context: (e.context_paragraph || e.context_source) && {
+      paragraph: e.context_paragraph,
+      source: e.context_source,
+    },
+    search_result: JSON.parse(e.search_result),
+  });
+}
+
 @injectable()
 export class HistoryRepoImpl implements HistoryRepo {
   private log = logger.getLogger(HistoryRepoImpl.name);
+
 
   findById(id: string): Promise<ISearchHistory | null | undefined> {
     return new Promise(((resolve, reject) => {
@@ -54,12 +69,7 @@ export class HistoryRepoImpl implements HistoryRepo {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
             })
-              .map(e => ({
-                ...e,
-                context: JSON.parse(e.context),
-                search_result: JSON.parse(e.search_result),
-              }))
-              .map(e => SearchHistory.wrap(e));
+              .map(row2obj);
             resolve(items.length ? items[0] : null);
           });
       }, (error) => {
@@ -84,13 +94,7 @@ export class HistoryRepoImpl implements HistoryRepo {
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
-            })
-              .map(e => ({
-                ...e,
-                context: JSON.parse(e.context),
-                search_result: JSON.parse(e.search_result),
-              }))
-              .map(e => SearchHistory.wrap(e));
+            }).map(row2obj);
             resolve(items);
           });
       }, (error) => {
@@ -111,7 +115,8 @@ export class HistoryRepoImpl implements HistoryRepo {
             history.id,
             history.user_id,
             history.text,
-            JSON.stringify(history.context),
+            history.context?.paragraph,
+            history.context?.source,
             history.create_at,
             history.update_at,
             JSON.stringify(history.search_result),
@@ -136,14 +141,15 @@ export class HistoryRepoImpl implements HistoryRepo {
           [
             history.user_id,
             history.text,
-            JSON.stringify(history.context),
+            history.context?.paragraph,
+            history.context?.source,
             history.create_at,
             history.update_at,
             JSON.stringify(history.search_result),
             history.id,
           ],
           (tx, res) => {
-            resolve()
+            resolve();
           });
       }, (error) => {
         this.log.error(error);
@@ -157,17 +163,12 @@ export class HistoryRepoImpl implements HistoryRepo {
     return new Promise(((resolve, reject) => {
       database.transaction(tx => {
         tx.executeSql(
-          `select * from histories where user_id = ? order by update_at desc`,
-          [user_id],
+          `select distinct context_source from histories where user_id = ? and context_source like ? order by update_at desc`,
+          [user_id, `${text}%`],
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
-            })
-              .filter(
-                e => !!e.context?.source?.trim()
-                  && e.context!!.source!!.includes(text),
-              )
-              .map(e => e.text);
+            });
             resolve(items);
           });
       }, (error) => {
@@ -198,13 +199,7 @@ export class HistoryRepoImpl implements HistoryRepo {
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
-            })
-              .map(e => ({
-                ...e,
-                context: JSON.parse(e.context),
-                search_result: JSON.parse(e.search_result),
-              }))
-              .map(e => SearchHistory.wrap(e));
+            }).map(row2obj);
             resolve(items);
           });
       }, (error) => {
@@ -230,13 +225,7 @@ export class HistoryRepoImpl implements HistoryRepo {
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
-            })
-              .map(e => ({
-                ...e,
-                context: JSON.parse(e.context),
-                search_result: JSON.parse(e.search_result),
-              }))
-              .map(e => SearchHistory.wrap(e));
+            }).map(row2obj);
             resolve(items);
           });
       }, (error) => {

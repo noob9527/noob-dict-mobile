@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import { useSelector } from 'react-redux';
 import { SearchInputState } from '../input/search-input-model';
 import { SearchPanelState } from './search-panel-model';
@@ -7,13 +7,17 @@ import { SearchSuggests } from './search-suggests';
 import { ActivityIndicator } from 'react-native';
 import { SearchTabs } from './search-tabs';
 import { ThemedEmpty } from '../../../components/themed-ui/empty/empty';
+import { SearchNote } from '../note/search-note';
+import ColorId from '../../../styles/color-id';
 
 const Container = styled.View`
  flex: 1;
  justify-content: center;
+ margin-bottom: 80px;
 `;
 
 export const SearchPanel = () => {
+  const theme = useTheme();
   const {
     open,
   } = useSelector((state: { searchInput: SearchInputState }) => state.searchInput);
@@ -24,11 +28,14 @@ export const SearchPanel = () => {
   if (open) {
     component = (<SearchSuggests/>);
   } else if (state.loading) {
-    component = (<ActivityIndicator color={'rebeccapurple'} size={80} style={{ bottom: 40 }}/>);
+    component = (<ActivityIndicator color={theme[ColorId.foreground]} size={80} style={{ bottom: 40 }}/>);
   } else if (!state.primaryResult) {
     component = (<ThemedEmpty/>);
   } else {
-    component = (<SearchTabs/>);
+    component = (<>
+      <SearchTabs/>
+      <SearchNote/>
+    </>);
   }
 
   return (

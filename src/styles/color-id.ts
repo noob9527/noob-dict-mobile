@@ -15,6 +15,7 @@ enum ColorId {
 
   // input
   input_foreground = 'input.foreground',
+  input_placeholder = 'input.placeholder',
   input_background = 'input.background',
   input_border = 'input.border',
 
