@@ -24,6 +24,10 @@ export interface HistoryUpdateAtSearchParam extends HistorySearchParam {
   }
 }
 
+export interface HistoryQuery extends HistorySearchParam {
+  text_in?: string[]
+}
+
 export interface HistoryService {
   /**
    * add history item to db
@@ -54,6 +58,8 @@ export interface HistoryService {
   searchByUpdateAt(param: HistoryUpdateAtSearchParam): Promise<ISearchHistory[]>
 
   fetchSourceSuggest(text: string, user_id: string): Promise<string[]>
+
+  list(query: HistoryQuery): Promise<ISearchHistory[]>
 
   // remove all
 }

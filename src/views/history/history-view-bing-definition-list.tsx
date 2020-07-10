@@ -12,6 +12,7 @@ const ItemContainer = styled.View`
 `;
 
 const StyledText = styled(ThemedText)`
+  margin-right: 10px;
 `;
 
 interface BingDefinitionListProp {

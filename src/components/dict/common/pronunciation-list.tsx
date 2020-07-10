@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Pronunciation, LanguageTag } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
 import Speaker from '../shared/speaker/speaker';
@@ -10,10 +10,12 @@ const ItemContainer = styled.View`
   align-items: center;
   margin-right: 20px;
 `;
+
 const ListContainer = styled.View`
   flex-direction: row;
   align-items: center;
 `;
+
 const StyledText = styled(ThemedText)`
   margin-right: 5px;
 `;
@@ -24,6 +26,7 @@ interface PronunciationItemProps {
 
 interface PronunciationListProps {
   pronunciations: Pronunciation[]
+  style?: StyleProp<ViewStyle>
 }
 
 const PronunciationItem: React.FC<PronunciationItemProps> = (props: PronunciationItemProps) => {
@@ -38,9 +41,9 @@ const PronunciationItem: React.FC<PronunciationItemProps> = (props: Pronunciatio
 };
 
 const PronunciationList: React.FC<PronunciationListProps> = (props: PronunciationListProps) => {
-  const { pronunciations } = props;
+  const { pronunciations, style } = props;
   return (
-    <ListContainer>
+    <ListContainer style={style}>
       {pronunciations.map((prop, i) => (
         <PronunciationItem pronunciation={prop} key={i}/>
       ))}

@@ -1,29 +1,38 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { ThemedText } from '../../components/themed-ui/text/text';
-import { SearchHistory } from '../../model/history';
+import { ISearchHistory } from '../../model/history';
 import Title from '../../components/dict/common/title';
 import PronunciationList from '../../components/dict/common/pronunciation-list';
 import { HistoryViewBingDefinitionList } from './history-view-bing-definition-list';
+import { Note } from '../../model/note';
+import _ from 'lodash';
+import ColorId from '../../styles/color-id';
+import moment from 'moment';
+import WordFormList from '../../components/dict/common/word-form-list';
 
 const Container = styled.View`
-  margin: 10px;
 `;
 
-const ResultContainer = styled.View`
+const TopContainer = styled.View`
   flex-direction: row;
 `;
 
-const HistoryTitle = styled(Title)`
+const LeftContainer = styled.View`
+`;
+
+const StyledTitle = styled(Title)`
   font-size: 15px;
 `;
 
-const DefinitionContainer = styled.View`
+const RightContainer = styled.View`
+  flex: 1;
   margin-left: 15px;
 `;
 
-const ContextContainer = styled.View`
-  height: 0;
+const MidContainer = styled.View`
+  margin-top: 5px;
+  margin-bottom: 5px;
 `;
 
 const ContextParagraph = styled(ThemedText)`
@@ -34,30 +43,70 @@ const ContextSource = styled(ThemedText)`
 
 `;
 
+const FooterContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const StyledPronunciationList = styled(PronunciationList)`
+`;
+
+const StyledWordFormList = styled(WordFormList)`
+  margin-top: 0;
+`;
+
+const SecondaryText = styled(ThemedText)`
+  color: ${props => props.theme[ColorId.foreground_secondary]};
+  font-size: 10px;
+`;
+
 export interface HistoryItemProp {
-  history: SearchHistory
+  note: Note
 }
 
 export const HistoryItem: React.FC<HistoryItemProp> = (prop) => {
-  const { history } = prop;
+  const { note } = prop;
 
-  const pronunciations = history.search_result.definitions.flatMap(e => e.pronunciations);
-  const wordForms = history.search_result.definitions.flatMap(e => e.wordForms);
-  const definitions = history.search_result.definitions.slice(0, 2);
+  const pronunciations = note.search_result.pronunciations ?? note.search_result.definitions.flatMap(e => e.pronunciations);
+  const wordForms = note.search_result.wordForms ?? note.search_result.definitions.flatMap(e => e.wordForms);
+  const definitions = note.search_result.definitions.slice(0, 2);
+
+  const latestHistory: ISearchHistory = _.chain(note.histories)
+    .sortBy(e => -e.create_at)
+    .first()
+    .value();
 
   return (
     <Container>
-      <ResultContainer>
-        <HistoryTitle>{history.text}</HistoryTitle>
-        <DefinitionContainer>
-          <PronunciationList pronunciations={pronunciations}/>
+      <TopContainer>
+        <LeftContainer>
+          <StyledTitle>{note.text}</StyledTitle>
+          {/*<StyledWordFormList wordForms={wordForms}/>*/}
+        </LeftContainer>
+        <RightContainer>
+          <StyledPronunciationList pronunciations={pronunciations}/>
           <HistoryViewBingDefinitionList definitions={definitions as any}/>
-        </DefinitionContainer>
-      </ResultContainer>
-      <ContextContainer>
-        <ContextParagraph>{history.context?.paragraph}</ContextParagraph>
-        <ContextSource>{history.context?.source}</ContextSource>
-      </ContextContainer>
+        </RightContainer>
+      </TopContainer>
+      {
+        latestHistory.context?.paragraph && (
+          <MidContainer>
+            <ContextParagraph>Context: {latestHistory.context?.paragraph}</ContextParagraph>
+          </MidContainer>
+        )
+      }
+      <FooterContainer>
+        <SecondaryText>
+          {moment(note.create_at).format('YYYY-MM-DD HH:mm')}
+        </SecondaryText>
+        {
+          latestHistory.context?.source && (
+            <SecondaryText>
+              Source: {latestHistory?.context?.source}
+            </SecondaryText>
+          )
+        }
+      </FooterContainer>
     </Container>
   );
 };

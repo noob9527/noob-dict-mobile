@@ -3,6 +3,7 @@ import logger from '../../../utils/logger';
 import { INote, Note } from '../../../model/note';
 import { NoteRepo } from '../../db/note-repo';
 import { injectable } from 'inversify';
+import { NoteUpdateAtSearchParam } from '../../db/note-service';
 
 const noteInsertSql = `
 insert into notes 
@@ -41,6 +42,13 @@ set
   search_result = ?
 where id = ?
 `;
+
+function row2obj(e: any) {
+  return Note.wrap({
+    ...e,
+    search_result: JSON.parse(e.search_result),
+  });
+}
 
 @injectable()
 export class NoteRepoImpl implements NoteRepo {
@@ -107,12 +115,7 @@ export class NoteRepoImpl implements NoteRepo {
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
-            })
-              .map(e => ({
-                ...e,
-                search_result: JSON.parse(e.search_result),
-              }))
-              .map(e => Note.wrap(e));
+            }).map(row2obj);
             resolve(items[0]);
           });
       }, (error) => {
@@ -131,12 +134,7 @@ export class NoteRepoImpl implements NoteRepo {
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
-            })
-              .map(e => ({
-                ...e,
-                search_result: JSON.parse(e.search_result),
-              }))
-              .map(e => Note.wrap(e));
+            }).map(row2obj);
             resolve(items[0]);
           });
       }, (error) => {
@@ -155,12 +153,36 @@ export class NoteRepoImpl implements NoteRepo {
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
-            })
-              .map(e => ({
-                ...e,
-                search_result: JSON.parse(e.search_result),
-              }))
-              .map(e => Note.wrap(e));
+            }).map(row2obj);
+            resolve(items);
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
+
+  searchByUpdateAt(param: NoteUpdateAtSearchParam): Promise<INote[]> {
+    const { user_id } = param;
+    const lowerBound = param.updateAtBetween.lowerBound;
+    const upperBound = param.updateAtBetween.upperBound ?? (new Date()).getTime();
+    const includeLower = param.updateAtBetween.includeLower ?? true;
+    const includeUpper = param.updateAtBetween.includeUpper ?? true;
+    const gt_op = includeLower ? '>=' : '>';
+    const lt_op = includeUpper ? '<=' : '<';
+
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          `select * from notes where user_id = ? and update_at ${gt_op} ? and update_at ${lt_op} ? order by update_at desc`,
+          [user_id, lowerBound, upperBound],
+          // `select * from notes order by update_at desc`,
+          // [],
+          (tx, res) => {
+            const items = Array.from({ length: res.rows.length }).map((e, i) => {
+              return res.rows.item(i);
+            }).map(row2obj);
             resolve(items);
           });
       }, (error) => {

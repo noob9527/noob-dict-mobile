@@ -1,13 +1,14 @@
 import { injectable } from 'inversify';
 import { v4 as uuidv4 } from 'uuid';
 import { HistoryService, HistoryServiceToken } from '../../db/history-service';
-import { NoteService } from '../../db/note-service';
+import { NoteService, NoteUpdateAtSearchParam } from '../../db/note-service';
 import logger from '../../../utils/logger';
 import { rendererContainer } from '../renderer-container';
 import { INote, Note } from '../../../model/note';
 import { ISearchHistory } from '../../../model/history';
 import { HistoryRepo, HistoryRepoToken } from '../../db/history-repo';
 import { NoteRepo, NoteRepoToken } from '../../db/note-repo';
+import _ from 'lodash';
 
 @injectable()
 export class NoteServiceImpl implements NoteService {
@@ -39,7 +40,7 @@ export class NoteServiceImpl implements NoteService {
       // we do not call this.historyService.update as we don't want to change history.update_at
       await this.historyRepo.update(history);
     } else {
-      await this.addHistory(history)
+      await this.addHistory(history);
     }
   }
 
@@ -95,6 +96,23 @@ export class NoteServiceImpl implements NoteService {
 
   async fetchLatest(limit: number, user_id: string): Promise<INote[]> {
     return this.repo.fetchLatest(limit, user_id);
+  }
+
+  async searchByUpdateAt(param: NoteUpdateAtSearchParam): Promise<INote[]> {
+    return this.repo.searchByUpdateAt(param);
+  }
+
+  async join_histories(notes: Note[]): Promise<INote[]> {
+    if (!notes.length) return notes;
+    const user_id = notes[0].user_id;
+    const text_in = notes.map(e => e.text);
+
+    const histories = await this.historyService.list({ user_id, text_in });
+    const map = _.groupBy(histories, e => e.text);
+    notes.forEach(note => {
+      note.histories = map[note.text];
+    });
+    return notes;
   }
 
 }

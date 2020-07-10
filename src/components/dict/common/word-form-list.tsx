@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleProp, ViewStyle } from 'react-native';
 import { WordForm, WordFormToken } from '@noob9527/noob-dict-core';
 import styled from 'styled-components/native';
 import { ThemedText } from '../../themed-ui/text/text';
@@ -18,6 +18,7 @@ interface WordFormItemProp {
 }
 interface WordFormListProp {
   wordForms: WordForm[]
+  style?: StyleProp<ViewStyle>
 }
 
 const WordFormItem: React.FC<WordFormItemProp> = (props: WordFormItemProp) => {
@@ -30,9 +31,9 @@ const WordFormItem: React.FC<WordFormItemProp> = (props: WordFormItemProp) => {
   );
 };
 const WordFormList: React.FC<WordFormListProp> = (props: WordFormListProp) => {
-  const { wordForms } = props;
+  const { wordForms, style } = props;
   return (
-    <ListContainer>
+    <ListContainer style={style}>
       {wordForms.map((def, i) => (<WordFormItem wordForm={def} key={i}/>))}
     </ListContainer>
   );

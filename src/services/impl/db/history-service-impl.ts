@@ -6,6 +6,7 @@ import {
   HistoryService,
   HistoryServiceToken,
   HistoryUpdateAtSearchParam,
+  HistoryQuery,
 } from '../../db/history-service';
 import { ISearchHistory } from '../../../model/history';
 import { HistoryRepoImpl } from './history-repo-impl';
@@ -22,12 +23,16 @@ export class HistoryServiceImpl implements HistoryService {
     this.repo = rendererContainer.get<HistoryRepo>(HistoryRepoToken);
   }
 
+  list(query: HistoryQuery): Promise<ISearchHistory[]> {
+    return this.repo.list(query);
+  }
+
   findById(id: string): Promise<ISearchHistory> {
-    return this.repo.findById(id)
+    return this.repo.findById(id);
   }
 
   getById(id: string): Promise<ISearchHistory> {
-    return this.repo.getById(id)
+    return this.repo.getById(id);
   }
 
   findAll(text: string, user_id: string): Promise<ISearchHistory[]> {

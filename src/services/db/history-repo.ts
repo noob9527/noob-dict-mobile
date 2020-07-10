@@ -1,5 +1,5 @@
 import { ISearchHistory } from '../../model/history';
-import { HistoryCreateAtSearchParam, HistoryUpdateAtSearchParam } from './history-service';
+import { HistoryCreateAtSearchParam, HistoryQuery, HistoryUpdateAtSearchParam } from './history-service';
 
 export const HistoryRepoToken = Symbol.for('history-repo');
 
@@ -19,6 +19,8 @@ export interface HistoryRepo {
   searchByCreateAt(param: HistoryCreateAtSearchParam): Promise<ISearchHistory[]>;
 
   searchByUpdateAt(param: HistoryUpdateAtSearchParam): Promise<ISearchHistory[]>;
+
+  list(query: HistoryQuery): Promise<ISearchHistory[]>
 
   clearAll(): Promise<void>;
 }

@@ -1,7 +1,7 @@
 import { ISearchHistory, SearchHistory } from '../../../model/history';
 import database from './database';
 import logger from '../../../utils/logger';
-import { HistoryCreateAtSearchParam, HistoryUpdateAtSearchParam } from '../../db/history-service';
+import { HistoryCreateAtSearchParam, HistoryQuery, HistoryUpdateAtSearchParam } from '../../db/history-service';
 import { HistoryRepo } from '../../db/history-repo';
 import { injectable } from 'inversify';
 
@@ -58,6 +58,29 @@ function row2obj(e: any) {
 export class HistoryRepoImpl implements HistoryRepo {
   private log = logger.getLogger(HistoryRepoImpl.name);
 
+  list(query: HistoryQuery): Promise<ISearchHistory[]> {
+    const { user_id, text_in } = query;
+    const text = text_in.map(e => `'${e}'`).join(',');
+    return new Promise(((resolve, reject) => {
+      database.transaction(tx => {
+        tx.executeSql(
+          // somehow this doesn't work
+          // 'select * from histories where user_id = ? and text in (?)',
+          // [user_id, text],
+          `select * from histories where user_id = ? and text in (${text})`,
+          [user_id],
+          (tx, res) => {
+            const items = Array.from({ length: res.rows.length }).map((e, i) => {
+              return res.rows.item(i);
+            }).map(row2obj);
+            resolve(items);
+          });
+      }, (error) => {
+        this.log.error(error);
+        reject(error);
+      });
+    }));
+  }
 
   findById(id: string): Promise<ISearchHistory | null | undefined> {
     return new Promise(((resolve, reject) => {

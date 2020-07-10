@@ -16,8 +16,7 @@ const Container = styled(SafeAreaView)`
 `;
 
 const ContentContainer = styled.View`
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 10px;
   height: 100%;
   background-color: ${props => props.theme[ColorId.background]};
 `;
@@ -25,17 +24,17 @@ const ContentContainer = styled.View`
 const HistoryView: React.FC = () => {
   const dispatch = useDispatch();
   const historyState: HistoryState = useSelector((state: any) => state.history);
-  const { stale, histories } = historyState;
+  const { stale, notes } = historyState;
 
   useEffect(() => {
     if (stale) {
       dispatch({
-        type: 'history/fetchLatestHistories',
+        type: 'history/fetchLatestNotes',
       });
     }
   });
 
-  if (!histories.length) {
+  if (!notes.length) {
     return (
       <Container>
         <ContentContainer>
@@ -48,9 +47,9 @@ const HistoryView: React.FC = () => {
     <Container>
       <ContentContainer>
         <FlatList
-          data={histories}
+          data={notes}
           keyExtractor={(item: any) => item.id}
-          renderItem={({ item, index }) => <HistoryItem history={item}/>}
+          renderItem={({ item, index }) => <HistoryItem note={item}/>}
           ItemSeparatorComponent={LineSeparator}
         />
       </ContentContainer>

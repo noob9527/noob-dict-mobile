@@ -1,19 +1,19 @@
-import { call, fork, put, select, take } from '@redux-saga/core/effects';
+import { call, put, select } from '@redux-saga/core/effects';
 import { rendererContainer } from '../../services/impl/renderer-container';
-import { HistoryCreateAtSearchParam, HistoryService, HistoryServiceToken } from '../../services/db/history-service';
-import { ISearchHistory } from '../../model/history';
 import { Model } from '../../redux/model-manager';
 import { RootState } from '../root-model';
 import moment from 'moment';
 import logger from '../../utils/logger';
+import { NoteService, NoteServiceToken, NoteUpdateAtSearchParam } from '../../services/db/note-service';
+import { INote } from '../../model/note';
 
-const historyService = rendererContainer.get<HistoryService>(HistoryServiceToken);
+const noteService = rendererContainer.get<NoteService>(NoteServiceToken);
 const log = logger.getLogger('historyModel');
 
 export interface HistoryState {
   stale: boolean,
-  searchParams: HistoryCreateAtSearchParam,
-  histories: ISearchHistory[],
+  searchParams: NoteUpdateAtSearchParam,
+  notes: INote[],
 }
 
 export interface HistoryModel extends Model {
@@ -24,25 +24,26 @@ const state: HistoryState = {
   stale: true,
   searchParams: {
     user_id: '',
-    createAtBetween: {
+    updateAtBetween: {
       lowerBound: moment().subtract(1, 'years').valueOf(),
     },
   },
-  histories: [],
+  notes: [],
 };
 const effects = {
-  * fetchLatestHistories(action) {
+  * fetchLatestNotes() {
     const rootState: RootState = yield select((state: any) => state.root);
     const historyState: HistoryState = yield select((state: any) => state.history);
     const { searchParams } = historyState;
     searchParams.user_id = rootState?.currentUser?.id ?? '';
-    let histories = yield call([historyService, historyService.searchByCreateAt], searchParams);
-    log.debug('fetchLatestHistories size: ', histories.length);
+    let notes = yield call([noteService, noteService.searchByUpdateAt], searchParams);
+    notes = yield call([noteService, noteService.join_histories], notes);
+    log.debug('fetchLatestNotes size: ', notes.length);
     yield put({
       type: 'history/mergeState',
       payload: {
         stale: false,
-        histories,
+        notes,
       },
     });
   },

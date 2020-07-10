@@ -1,7 +1,20 @@
-import { INote } from '../../model/note';
+import { INote, Note } from '../../model/note';
 import { ISearchHistory } from '../../model/history';
 
 export const NoteServiceToken = Symbol.for('note-service');
+
+interface NoteSearchParam {
+  user_id: string
+}
+
+export interface NoteUpdateAtSearchParam extends NoteSearchParam {
+  updateAtBetween: {
+    lowerBound: number,
+    upperBound?: number,
+    includeLower?: boolean,
+    includeUpper?: boolean,
+  }
+}
 
 export interface NoteService {
   // cascade fetch corresponding histories
@@ -18,4 +31,9 @@ export interface NoteService {
   syncHistory(history: ISearchHistory): Promise<void>
 
   // addHistories(histories: ISearchHistory[]): Promise<ISearchHistory[]>
+
+  searchByUpdateAt(param: NoteUpdateAtSearchParam): Promise<INote[]>
+
+  join_histories(notes: Note[]): Promise<INote[]>
+
 }
