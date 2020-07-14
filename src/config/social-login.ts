@@ -29,14 +29,10 @@ const githubOption: LoginOption = {
   tokenExchangeUrl: 'https://a3eks8ljq9.execute-api.ap-east-1.amazonaws.com/prod/auth/github',
   endpoint: 'https://github.com/login/oauth/authorize',
   params: {
-    // client_id: 'd0812cce061bc8601159',
-    // client_id: '28e5da20b548b1b8e115',
     client_id: Constants.manifest.extra['REACT_NATIVE_APP_GITHUB_CLIENT_ID'],
     redirect_uri: makeRedirectUri({
       native: Constants.manifest.extra['REACT_NATIVE_APP_GITHUB_REDIRECT_URI'],
-      // native: 'https://auth.expo.io/@noob9527/noob-dict-mobile',
-      // useProxy: Runtime.isDev,
-      useProxy: false,
+      useProxy: Runtime.isDev,
     }),
     scope: 'user',
   },
@@ -60,7 +56,7 @@ const weiboOption: LoginOption = {
     client_id: Constants.manifest.extra['REACT_NATIVE_APP_WEIBO_CLIENT_ID'],
     redirect_uri: makeRedirectUri({
       native: Constants.manifest.extra['REACT_NATIVE_APP_WEIBO_REDIRECT_URI'],
-      useProxy: false,
+      useProxy: Runtime.isDev,
     }),
     response_type: 'code',
   },

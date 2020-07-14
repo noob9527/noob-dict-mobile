@@ -70,11 +70,7 @@ export class GlobalHistoryServiceImpl implements GlobalHistoryService {
     const res = await axios.patch(`${ApiConfig.baseUrl}/histories`, request);
     const data = res.data as SyncHistoriesResponse;
     // wrap history
-    console.log(11111111111111111111111111111);
-    console.log(data.itemSinceLastSync[0]);
     data.itemSinceLastSync = data.itemSinceLastSync.map(e => SearchHistory.wrap(e));
-    console.log(22222222222222222222222222222);
-    console.log(data.itemSinceLastSync[0]);
     return data;
   }
 

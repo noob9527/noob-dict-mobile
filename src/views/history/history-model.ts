@@ -56,6 +56,12 @@ const reducers = {
       ...action.payload,
     };
   },
+  setStale(state, action: any) {
+    return {
+      ...state,
+      ...action.payload,
+    };
+  },
 };
 
 export const historyModel: HistoryModel = {

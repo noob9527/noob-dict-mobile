@@ -55,7 +55,7 @@ export class NoteRepoImpl implements NoteRepo {
   private log = logger.getLogger(NoteRepoImpl.name);
 
   async save(note: INote): Promise<INote> {
-    this.log.debug(this.save.name, note);
+    this.log.debug(this.save.name, note.id, note.user_id, note.text);
 
     return new Promise(((resolve, reject) => {
       database.transaction(tx => {

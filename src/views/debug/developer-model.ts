@@ -18,19 +18,17 @@ const effects = {
     yield put({
       type: 'root/mergeState',
       payload: {
-        user: currentUser
-      }
-    })
+        user: currentUser,
+      },
+    });
   },
 };
 
-const reducers = {
-};
+const reducers = {};
 
 export const developerModel: Model = {
   namespace: 'developer',
-  state: {
-  },
+  state: {},
   effects,
   reducers,
 };

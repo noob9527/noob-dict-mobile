@@ -11,6 +11,7 @@ import { SearchHistory } from '../../model/history';
 import { NoteRepo, NoteRepoToken } from '../../services/db/note-repo';
 import { HistoryRepo, HistoryRepoToken } from '../../services/db/history-repo';
 import logger from '../../utils/logger';
+import { TransientState } from '../../model/transient-model';
 
 
 const Container = styled(SafeAreaView)`
@@ -29,17 +30,20 @@ const StyledButton = styled.Button`
 
 export const DeveloperView = () => {
   const rootState: RootState = useSelector((state: any) => state.root);
+  const transientState: TransientState = useSelector((state: any) => state._transient);
   const dispatch = useDispatch();
 
   return (
     <Container>
       <ContentContainer>
         <ThemedText>last sync time: {rootState.currentUser?.last_sync_time}</ThemedText>
+        <ThemedText>app state: {transientState.appState}</ThemedText>
         <StyledButton
           title={'fetch Latest Histories'}
           onPress={() => {
+            logger.log('press fetch Latest Histories button');
             dispatch({
-              type: 'history/fetchLatestHistories',
+              type: 'history/fetchLatestNotes',
             });
           }}
         />
@@ -62,15 +66,6 @@ export const DeveloperView = () => {
           }}
         />
         <StyledButton
-          title={'test sync history'}
-          onPress={() => {
-            const noteService = rendererContainer.get<NoteService>(NoteServiceToken);
-            noteService.syncHistory(SearchHistory.wrap({})).then(() => {
-              logger.log('sync success');
-            });
-          }}
-        />
-        <StyledButton
           title={'clear all table'}
           onPress={async () => {
             const noteRepo = rendererContainer.get<NoteRepo>(NoteRepoToken);
@@ -79,6 +74,11 @@ export const DeveloperView = () => {
             logger.log('clear note table success');
             await historyRepo.clearAll();
             logger.log('clear history table success');
+          }}
+        />
+        <StyledButton
+          title={'place holder'}
+          onPress={() => {
           }}
         />
       </ContentContainer>

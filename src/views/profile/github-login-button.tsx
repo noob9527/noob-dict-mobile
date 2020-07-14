@@ -6,14 +6,11 @@ import { useDispatch } from 'react-redux';
 import { githubOption } from '../../config/social-login';
 import logger from '../../utils/logger';
 
-const Container = styled.View`
-  width: 100%;
-`;
 
 const StyledButton = styled.Button`
 `;
 
-export const GithubLoginView: React.FC = () => {
+export const GithubLoginButton: React.FC = () => {
   // const theme = useContext(ThemeContext);
   const dispatch = useDispatch();
 
@@ -29,10 +26,11 @@ export const GithubLoginView: React.FC = () => {
       clientId: githubOption.params.client_id,
       scopes: [githubOption.params.scope],
       redirectUri: githubOption.params.redirect_uri,
+      // redirectUri: 'https://auth.expo.io/@noob9527/noob-dict-mobile/github/login_success',
+      // redirectUri: 'exp://10.88.119.176:19000/github/login_success',
     },
     discovery,
   );
-
 
   useEffect(() => {
     logger.debug('github login response', response);
@@ -49,18 +47,16 @@ export const GithubLoginView: React.FC = () => {
   }, [response]);
 
   function onPress() {
-    promptAsync();
+    promptAsync({ useProxy: true });
   }
 
   return (
-    <Container>
-      <StyledButton
-        color={'rebeccapurple'}
-        disabled={!request}
-        title={'Github Login'}
-        onPress={onPress}
-      >
-      </StyledButton>
-    </Container>
+    <StyledButton
+      color={'rebeccapurple'}
+      disabled={!request}
+      title={'Github Login'}
+      onPress={onPress}
+    >
+    </StyledButton>
   );
 };

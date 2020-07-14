@@ -40,7 +40,7 @@ export class HistoryServiceImpl implements HistoryService {
   }
 
   async save(history: ISearchHistory): Promise<ISearchHistory> {
-    // this.log.debug(this.save.name, history);
+    // this.log.debug(this.save.name, history.id, history.user_id, history.text);
 
     const now = new Date().valueOf();
     history.create_at = history.create_at ?? now;

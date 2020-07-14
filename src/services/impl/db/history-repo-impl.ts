@@ -128,7 +128,7 @@ export class HistoryRepoImpl implements HistoryRepo {
   }
 
   async save(history: ISearchHistory): Promise<ISearchHistory> {
-    this.log.debug(this.save.name, history.id, history.user_id, history.text);
+    // this.log.debug(this.save.name, history.id, history.user_id, history.text);
 
     return new Promise(((resolve, reject) => {
       database.transaction(tx => {

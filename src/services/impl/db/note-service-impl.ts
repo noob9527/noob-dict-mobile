@@ -45,7 +45,7 @@ export class NoteServiceImpl implements NoteService {
   }
 
   async addHistory(history: ISearchHistory): Promise<INote> {
-    // this.log.debug(this.addHistory.name, history);
+    this.log.debug(this.addHistory.name, history.id, history.user_id, history.text);
 
     await this.historyService.save(history);
     let note = await this.fetch(history.text, history.user_id);
@@ -64,7 +64,7 @@ export class NoteServiceImpl implements NoteService {
   }
 
   async save(note: INote): Promise<INote> {
-    this.log.debug(this.save.name, note);
+    // this.log.debug(this.save.name, note.id, note.user_id, note.text);
     const now = new Date().valueOf();
     note.id = uuidv4();
     note.create_at = now;
