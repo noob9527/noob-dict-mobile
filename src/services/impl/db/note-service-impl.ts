@@ -90,6 +90,7 @@ export class NoteServiceImpl implements NoteService {
     logger.debug(this.fetch.name, text, user_id);
     const res = await this.repo.fetch(text, user_id);
     if (!res) return res;
+    // for now, this is necessary to display context in search-note component
     res.histories = await this.historyService.findAll(text, user_id);
     return Note.wrap(res);
   }

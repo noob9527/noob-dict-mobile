@@ -49,13 +49,12 @@ export class GlobalHistoryServiceImpl implements GlobalHistoryService {
     methodLogger.debug('receive item size', res.itemSinceLastSync.length);
 
     // const promises = [this.noteService.syncHistory(res.itemSinceLastSync[0])];
-    const promises = res.itemSinceLastSync.map(history => {
-      return this.noteService.syncHistory(history);
-    });
-    for (const promise of promises) {
-      await promise;
-    }
     // await Promise.all(promises);
+    // for now, we have to process it one by one
+    // otherwise it produces duplicates note records
+    for (const history of res.itemSinceLastSync) {
+      await this.noteService.syncHistory(history);
+    }
 
     // update last sync time
     await this.updateLastSyncTime(string2date(res.serverLastSyncTime));

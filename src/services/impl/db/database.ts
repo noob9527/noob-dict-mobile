@@ -73,4 +73,11 @@ database.exec([
   logger.log('table init successed');
 });
 
+// database.exec([
+//   { sql: `
+//   `, args: [] },
+// ], false, (...args) => {
+//   console.log(...args);
+// });
+
 export default database;
