@@ -4,6 +4,7 @@
 import Constants from 'expo-constants';
 import { makeRedirectUri } from 'expo-auth-session';
 import { Runtime } from '../utils/runtime';
+import logger from '../utils/logger';
 
 enum LoginType {
   GITHUB = 'GITHUB',
@@ -48,6 +49,8 @@ const githubOption: LoginOption = {
     width: Math.ceil(1.3 * 752),
   },
 };
+
+logger.debug('redirect uri', githubOption.params.redirect_uri);
 
 const weiboOption: LoginOption = {
   tokenExchangeUrl: 'https://a3eks8ljq9.execute-api.ap-east-1.amazonaws.com/prod/auth/weibo',

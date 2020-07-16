@@ -14,6 +14,7 @@ import * as Linking from 'expo-linking';
 import HistoryView from './history/history-view';
 import { DeveloperView } from './debug/developer-view';
 import { rootNavigationRef } from './root-navigation';
+import { Runtime } from '../utils/runtime';
 
 const Tab = createBottomTabNavigator();
 
@@ -82,7 +83,9 @@ export function RootRouter() {
         {/*/>*/}
         <Tab.Screen name="History" component={HistoryView}/>
         <Tab.Screen name="Profile" component={ProfilePage}/>
-        <Tab.Screen name="Debug" component={DeveloperView}/>
+        {
+          Runtime.isDev && <Tab.Screen name="Debug" component={DeveloperView}/>
+        }
       </Tab.Navigator>
     </NavigationContainer>
   );
