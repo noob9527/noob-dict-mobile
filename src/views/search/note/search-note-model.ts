@@ -142,6 +142,7 @@ const effects = {
     yield put({
       type: 'searchNote/mergeState',
       payload: {
+        suggests: [],
         loadingSuggests: true,
       },
     });

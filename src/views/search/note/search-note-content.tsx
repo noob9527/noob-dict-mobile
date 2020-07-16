@@ -42,6 +42,11 @@ export const SearchNoteContent: React.FC = () => {
         <FlatList
           style={{ width: '100%' }}
           data={displayHistories}
+          // as https://github.com/mrlaessig/react-native-autocomplete-input#readme
+          // says "By default the autocomplete will not behave as expected inside a <ScrollView />.
+          // Set keyboardShouldPersistTaps='always' for RN >= 0.40. (#5)."
+          // I'm not sure this line have positive effect tho
+          keyboardShouldPersistTaps={'always'}
           keyExtractor={(item: any) => item.id}
           renderItem={({ item, index }) => {
             const component = item.editing

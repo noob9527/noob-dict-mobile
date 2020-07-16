@@ -46,6 +46,7 @@ export const SearchNoteHistoryEditor: React.FC<SearchNoteHistoryItemProps> = (pr
     <Container>
       <StyledTextInput
         ref={textInputEle}
+        key={'context'}
         value={historyData.newData.context?.paragraph ?? ''}
         placeholder={'context'}
         placeholderTextColor={theme[ColorId.input_placeholder]}
@@ -64,30 +65,30 @@ export const SearchNoteHistoryEditor: React.FC<SearchNoteHistoryItemProps> = (pr
           });
         }}
       />
-      {/*<SourceInput historyData={historyData}/>*/}
-      <StyledSourceInput
-        value={historyData.newData.context?.source ?? ''}
-        placeholder={'source'}
-        placeholderTextColor={theme[ColorId.input_placeholder]}
-        onChangeText={value => {
-          dispatch({
-            type: 'searchNote/typeHistoryContext',
-            payload: {
-              history: {
-                ...historyData.oldData,
-                context: {
-                  ...historyData.newData.context,
-                  source: value,
-                },
-              },
-            },
-          });
-          dispatch({
-            type: 'searchNote/searchTextChange',
-            value,
-          });
-        }}
-      />
+      <SourceInput key={'source'} historyData={historyData}/>
+      {/*<StyledSourceInput*/}
+      {/*  value={historyData.newData.context?.source ?? ''}*/}
+      {/*  placeholder={'source'}*/}
+      {/*  placeholderTextColor={theme[ColorId.input_placeholder]}*/}
+      {/*  onChangeText={value => {*/}
+      {/*    dispatch({*/}
+      {/*      type: 'searchNote/typeHistoryContext',*/}
+      {/*      payload: {*/}
+      {/*        history: {*/}
+      {/*          ...historyData.oldData,*/}
+      {/*          context: {*/}
+      {/*            ...historyData.newData.context,*/}
+      {/*            source: value,*/}
+      {/*          },*/}
+      {/*        },*/}
+      {/*      },*/}
+      {/*    });*/}
+      {/*    dispatch({*/}
+      {/*      type: 'searchNote/searchTextChange',*/}
+      {/*      value,*/}
+      {/*    });*/}
+      {/*  }}*/}
+      {/*/>*/}
     </Container>
   );
 };

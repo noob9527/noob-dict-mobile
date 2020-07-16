@@ -183,6 +183,8 @@ export class HistoryRepoImpl implements HistoryRepo {
   }
 
   fetchSourceSuggest(text: string, user_id: string): Promise<string[]> {
+    // return Promise.resolve(["foo", "bar", "baz", "qux"]);
+    this.log.getLogger(this.fetchSourceSuggest.name).log(text, user_id);
     return new Promise(((resolve, reject) => {
       database.transaction(tx => {
         tx.executeSql(
@@ -191,7 +193,7 @@ export class HistoryRepoImpl implements HistoryRepo {
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
-            });
+            }).map(e => e["context_source"]).filter(e => !!e && e !== text);
             resolve(items);
           });
       }, (error) => {
@@ -213,12 +215,12 @@ export class HistoryRepoImpl implements HistoryRepo {
     return new Promise(((resolve, reject) => {
       database.transaction(tx => {
         tx.executeSql(
-          `select * from histories order by create_at desc`,
-          [],
+          // `select * from histories order by create_at desc`,
+          // [],
           // `select * from histories where user_id = ? order by create_at desc`,
           // [param.user_id],
-          // `select * from histories where user_id = ? and create_at ${gt_op} ? and create_at ${lt_op} ? order by create_at desc`,
-          // [param.user_id, lowerBound, upperBound],
+          `select * from histories where user_id = ? and create_at ${gt_op} ? and create_at ${lt_op} ? order by create_at desc`,
+          [param.user_id, lowerBound, upperBound],
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);

@@ -45,7 +45,7 @@ export class NoteServiceImpl implements NoteService {
   }
 
   async addHistory(history: ISearchHistory): Promise<INote> {
-    this.log.debug(this.addHistory.name, history.id, history.user_id, history.text);
+    this.log.debug(this.addHistory.name, history.user_id, history.text);
 
     await this.historyService.save(history);
     let note = await this.fetch(history.text, history.user_id);
