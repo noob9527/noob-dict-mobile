@@ -1,12 +1,16 @@
 # noob dict mobile
+> 中英词典移动客户端 (react native)
 
-### todo
+![demo](demo.gif)
 
-### Notes
-1. metro 和 @noob9527/noob-dict-core 依赖的一些问题
-    1. `yarn add @noob9527/noob-dict-core` doesn't work. Currently, noob-dict-core is packaged to amd format, somehow metro cannot resolve amd module (maybe relates to https://github.com/facebook/metro/issues/225). it throws errors such like 'Error: Unknown named module isomorphic-fetch'. so we use metro's [extranodemodules](https://facebook.github.io/metro/docs/configuration/#extranodemodules) api to add noob-dict-core dependency(use commonjs module).
-    1. `yarn link @noob9527/noob-dict-core` doesn't work, cus metro cannot solve symlink.
-    1. 由于使用 extranodemodules 来指定依赖, typescript 无法在 node_modules 文件夹找到对应的声明文件。 因此我暂时使用 `yarn link @noob9527/noob-dict-core`. 因为 metro 无法处理 symlink, 因此不会对运行时造成影响，只是用来获取静态类型检查。
-    
-reference:
-- [How to import files from outside of root directory with React Native Metro bundler](https://medium.com/@dushyant_db/how-to-import-files-from-outside-of-root-directory-with-react-native-metro-bundler-18207a348427)
+### 为什么做这个？
+1. 同步自己在所有设备上的查词记录与笔记，方便自己记单词。
+2. 现在的查词 App 不太符合我的查词习惯，且常有烦人的开屏广告。
+
+### 如何安装？
+在 [builds](https://expo.io/dashboard/noob9527/noob-dict-mobile/builds) 页面下载最新的适合你当前操作系统的版本，下载安装。
+
+### 相关仓库
+- [noob dict desktop](https://github.com/noob9527/noob-dict-desktop) 是基于 electron 的桌面客户端，由于我只用 ubuntu 系统，目前只在 ubuntu 系统上测试过。
+- [noob dict mobile](https://github.com/noob9527/noob-dict-mobile) 是基于 react native 的移动客户端，由于我只有 android 手机，目前只有 android build。
+

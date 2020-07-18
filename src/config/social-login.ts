@@ -3,6 +3,7 @@
  */
 import Constants from 'expo-constants';
 import { makeRedirectUri } from 'expo-auth-session';
+import { Runtime } from '../utils/runtime';
 
 enum LoginType {
   GITHUB = 'GITHUB',
@@ -34,6 +35,7 @@ const githubOption: LoginOption = {
     redirect_uri: makeRedirectUri({
       native: Constants.manifest.extra['REACT_NATIVE_APP_GITHUB_REDIRECT_URI'],
       // native: 'https://auth.expo.io/@noob9527/noob-dict-mobile',
+      // useProxy: Runtime.isDev,
       useProxy: false,
     }),
     scope: 'user',
