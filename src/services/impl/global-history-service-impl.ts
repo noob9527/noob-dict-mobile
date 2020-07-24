@@ -63,8 +63,8 @@ export class GlobalHistoryServiceImpl implements GlobalHistoryService {
   }
 
   async sync2server(request: SyncHistoriesRequest): Promise<SyncHistoriesResponse> {
-    const methodLogger = this.log.getLogger(this.sync2server.name);
-    methodLogger.debug('request', request);
+    // const methodLogger = this.log.getLogger(this.sync2server.name);
+    // methodLogger.debug('request', request);
 
     const res = await axios.patch(`${ApiConfig.baseUrl}/histories`, request);
     const data = res.data as SyncHistoriesResponse;

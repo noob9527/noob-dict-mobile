@@ -246,7 +246,7 @@ export class HistoryRepoImpl implements HistoryRepo {
       database.transaction(tx => {
         tx.executeSql(
           `select * from histories where user_id = ? and update_at ${gt_op} ? and update_at ${lt_op} ?`,
-          [lowerBound, upperBound],
+          [param.user_id, lowerBound, upperBound],
           (tx, res) => {
             const items = Array.from({ length: res.rows.length }).map((e, i) => {
               return res.rows.item(i);
