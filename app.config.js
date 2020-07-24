@@ -14,6 +14,11 @@ export default {
   icon: "./src/assets/icon/icon@2x.png",
   scheme: "cn.staynoob.dict",
   version: "0.0.1",
+  splash: {
+    image: "./src/assets/splash.png",
+    // backgroundColor: "#1E1E1E"
+    backgroundColor: "#000000"
+  },
   ios: {
     bundleIdentifier: "cn.staynoob.dict",
     buildNumber: "0.0.1"
