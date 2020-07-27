@@ -107,7 +107,7 @@ function* watchSearchTextChange() {
   });
 
   function* debouncedFetchSuggests(action) {
-    yield delay(300);
+    yield delay(800);
     yield put({
       ...action,
       type: 'searchInput/fetchSuggests',

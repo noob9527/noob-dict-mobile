@@ -297,7 +297,7 @@ function* watchTypeContext() {
   });
 
   function* debounced(action) {
-    yield delay(1000);
+    yield delay(1200);
     yield put({
       ...action,
       type: 'searchNote/syncHistoryContext',
@@ -318,7 +318,7 @@ function* watchSearchTextChange() {
   });
 
   function* debouncedFetchSuggests(action) {
-    yield delay(300);
+    yield delay(800);
     yield put({
       ...action,
       type: 'searchNote/fetchSuggests',

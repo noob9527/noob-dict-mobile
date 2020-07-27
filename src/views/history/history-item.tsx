@@ -10,6 +10,10 @@ import _ from 'lodash';
 import ColorId from '../../styles/color-id';
 import moment from 'moment';
 import WordFormList from '../../components/dict/common/word-form-list';
+import { Context } from '../../model/search-domain';
+import { TouchableHighlight } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 const Container = styled.View`
 `;
@@ -22,6 +26,7 @@ const LeftContainer = styled.View`
 `;
 
 const StyledTitle = styled(Title)`
+  color: ${props => props.theme[ColorId.word_link]};
   font-size: 15px;
 `;
 
@@ -66,6 +71,9 @@ export interface HistoryItemProp {
 
 export const HistoryItem: React.FC<HistoryItemProp> = (prop) => {
   const { note } = prop;
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
 
   const pronunciations = note.search_result.pronunciations ?? note.search_result.definitions.flatMap(e => e.pronunciations);
   const wordForms = note.search_result.wordForms ?? note.search_result.definitions.flatMap(e => e.wordForms);
@@ -76,11 +84,26 @@ export const HistoryItem: React.FC<HistoryItemProp> = (prop) => {
     .first()
     .value();
 
+  const latestContext = _.chain(note.histories)
+    .filter(e => !!(e.context && (e.context.paragraph || e.context.source)))
+    .sortBy(e => -e.create_at)
+    .first()
+    .value()?.context;
+
   return (
     <Container>
       <TopContainer>
         <LeftContainer>
-          <StyledTitle>{note.text}</StyledTitle>
+          <StyledTitle onPress={() => {
+            console.log('press');
+            navigation.navigate('Search');
+            dispatch({
+              type: 'search/search',
+              payload: {
+                text: note.text
+              }
+            });
+          }}>{note.text}</StyledTitle>
           {/*<StyledWordFormList wordForms={wordForms}/>*/}
         </LeftContainer>
         <RightContainer>
@@ -89,7 +112,7 @@ export const HistoryItem: React.FC<HistoryItemProp> = (prop) => {
         </RightContainer>
       </TopContainer>
       {
-        latestHistory.context?.paragraph && (
+        latestContext?.paragraph && (
           <MidContainer>
             <ContextParagraph>Context: {latestHistory.context?.paragraph}</ContextParagraph>
           </MidContainer>
@@ -100,7 +123,7 @@ export const HistoryItem: React.FC<HistoryItemProp> = (prop) => {
           {moment(note.create_at).format('YYYY-MM-DD HH:mm')}
         </SecondaryText>
         {
-          latestHistory.context?.source && (
+          latestContext?.source && (
             <SecondaryText>
               Source: {latestHistory?.context?.source}
             </SecondaryText>
