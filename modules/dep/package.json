@@ -6,7 +6,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.1.1",
     "jsdom-jscore-rn": "^0.1.8",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "lodash-decorators": "^6.0.1"
   }
 }
