@@ -4,7 +4,7 @@
   "dependencies": {
     "@noob9527/noob-dict-core": "^0.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "jsdom": "^15.1.1",
+    "jsdom": "^16.5.0",
     "jsdom-jscore-rn": "^0.1.8",
     "lodash": "^4.17.15",
     "lodash-decorators": "^6.0.1"
